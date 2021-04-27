@@ -52,8 +52,7 @@ public class Screen {
                 if(xp < -Level.TILE_SIZE || xp >= width || yp < 0 || yp >= height) break;
                 if(xp < 0) xp = 0;
                 int col = tile.getSprite().getPixels()[x + y * tile.getSprite().getWidth()];
-                if(col == MASK_ALPHA) pixels[xp + yp * width] = 0xff200302;
-                else pixels[xp + yp * width] = col;
+                if(col != 0xffff00ff) pixels[xp + yp * width] = col;
             }
         }
     }

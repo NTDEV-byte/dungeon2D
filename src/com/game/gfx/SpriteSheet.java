@@ -2,6 +2,7 @@ package com.game.gfx;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.awt.image.ColorConvertOp;
 import java.io.IOException;
 
 public class SpriteSheet {
@@ -25,10 +26,13 @@ public class SpriteSheet {
         try {
             System.out.println(getClass().getResource(path));
             BufferedImage image = ImageIO.read(getClass().getResource(path));
+
             width = image.getWidth();
             height = image.getHeight();
             pixels = new int[width * height];
             image.getRGB(0,0,width,height,pixels,0,width);
+
+            System.out.println("Image Path: "+path+" Type: "+image.getType());
         } catch (IOException e) {
             e.printStackTrace();
         }

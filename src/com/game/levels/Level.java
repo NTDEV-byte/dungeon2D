@@ -8,6 +8,9 @@ public class Level {
     public static final int TILE_SIZE = 16;
     public static final Level SPAWN = new MappedLevel("/res/levels/spawn.png");
     public static final Level DIDOU = new MappedLevel("/res/levels/didou.png");
+    public static final Level INFANTRY = new MappedLevel("/res/levels/infantry.png");
+    public static final Level BEDROOM = new MappedLevel("/res/levels/bedroom.png");
+
 
 
     protected int width;

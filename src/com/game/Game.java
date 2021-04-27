@@ -20,7 +20,7 @@ public class Game extends Canvas implements Runnable{
     // TODO: 25/04/2021  Level Class XXX
     // TODO: 25/04/2021  RandomLevel , MappedLevel XXX
     // TODO: 25/04/2021  Tiles System and logic XXX
-
+    // TODO: Desing Levels
     /**************************************************/
     // TODO:  Entity System
     /**************************************************/
@@ -28,12 +28,10 @@ public class Game extends Canvas implements Runnable{
     // TODO: 25/04/2021  Intelligent Mobs System A*
     // TODO: 25/04/2021  Entity System
     // TODO: 25/04/2021  Camera
-
     /**************************************************/
     // TODO: Font
     /**************************************************/
     // TODO: 25/04/2021  Font
-
     /**************************************************/
     // TODO: Level Interactions
     /**************************************************/
@@ -45,14 +43,12 @@ public class Game extends Canvas implements Runnable{
     /**************************************************/
     // TODO: ImageUtils
     // TODO: Sprite Rotation
-
     /**************************************************/
     // TODO: UI
     /**************************************************/
     // TODO: 25/04/2021  InnerUI
     // TODO: 25/04/2021  External UI
-
-
+    /**************************************************/
 
 
             public static final int WIDTH = 300;
@@ -75,11 +71,10 @@ public class Game extends Canvas implements Runnable{
         setView();
         }
 
-
         private void initialize(){
           screen = new Screen(WIDTH,HEIGHT);
           input = new InputHandler();
-          level = Level.DIDOU;
+          level = Level.BEDROOM;
         }
 
         private void setView(){
