@@ -1,14 +1,20 @@
 package com.game;
 
-import com.game.gfx.Screen;
-import com.game.input.InputHandler;
-import com.game.levels.Level;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Canvas;
+import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
+
+import javax.swing.JFrame;
+
+import com.game.entity.npcs.Player;
+import com.game.gfx.Screen;
+import com.game.gfx.Sprite;
+import com.game.input.InputHandler;
+import com.game.levels.Level;
+import com.game.utils.Generator;
 
 public class Game extends Canvas implements Runnable{
 
@@ -20,14 +26,27 @@ public class Game extends Canvas implements Runnable{
     // TODO: 25/04/2021  Level Class XXX
     // TODO: 25/04/2021  RandomLevel , MappedLevel XXX
     // TODO: 25/04/2021  Tiles System and logic XXX
-    // TODO: Desing Levels
+    // TODO: Design Levels XXX
     /**************************************************/
     // TODO:  Entity System
     /**************************************************/
-    // TODO: 25/04/2021  Entity System
-    // TODO: 25/04/2021  Intelligent Mobs System A*
-    // TODO: 25/04/2021  Entity System
-    // TODO: 25/04/2021  Camera
+    // TODO: 25/04/2021  Entity System XXX
+    // TODO: 25/04/2021  Particals XXX
+    // TODO: 25/04/2021  Projectiles XXX
+    /*****************************************************
+    //  // TODO:  Entity Interactions
+    //****************************************************/
+    // TODO: 25/04/2021 PlayerShoots XXX
+    /******************************************************/
+    // TODO: 25/04/2021 Intelligent Mobs System A*
+    // TODO: 25/04/2021 Entity System
+    // TODO: 25/04/2021 Camera
+    /****************************************************/
+    // TODO: Collisions
+    /****************************************************/
+    // TODO: Mob VS World
+    // TODO: Mob VS Particals
+    // TODO: Mob VS Mob
     /**************************************************/
     // TODO: Font
     /**************************************************/
@@ -54,7 +73,7 @@ public class Game extends Canvas implements Runnable{
             public static final int WIDTH = 300;
             public static final int HEIGHT = WIDTH * 9 / 16;
             public static final int SCALE = 3;
-
+            public static Level level;
             private boolean running;
             private Thread thread;
             private JFrame window;
@@ -62,19 +81,20 @@ public class Game extends Canvas implements Runnable{
             private Screen screen;
             private InputHandler input;
             private int pixels[] = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
-            private Level level;
-            private int xOffset,yOffset;
+            private Player player;
 
 
-       public Game(){
-        initialize();
-        setView();
-        }
+           public Game(){
+            initialize();
+            setView();
+            }
 
         private void initialize(){
           screen = new Screen(WIDTH,HEIGHT);
           input = new InputHandler();
-          level = Level.BEDROOM;
+          level = Level.SPAWN;
+          player = new Player(0,0,input);
+          player.setLevel(level);
         }
 
         private void setView(){
@@ -84,7 +104,9 @@ public class Game extends Canvas implements Runnable{
             window.setLocationRelativeTo(null);
             window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             setPreferredSize(new Dimension(WIDTH * SCALE,HEIGHT * SCALE));
-            window.addKeyListener(input);
+            addKeyListener(input);
+            addMouseListener(input);
+            addMouseMotionListener(input);
             window.add(this);
             window.pack();
         }
@@ -106,18 +128,8 @@ public class Game extends Canvas implements Runnable{
 
             public void update(){
                 input.update();
-                if(input.up){
-                    yOffset--;
-                }
-                if(input.right){
-                    xOffset++;
-                }
-                if(input.down){
-                    yOffset++;
-                }
-                if(input.left){
-                    xOffset--;
-                }
+                player.update();
+                level.update();
             }
 
             public void render(){
@@ -128,8 +140,8 @@ public class Game extends Canvas implements Runnable{
                 }
                 // draw part
                 Graphics g = bs.getDrawGraphics();
-                screen.clear();
-                level.render(screen,xOffset,yOffset);
+                level.render(screen,player.getCenterX(),player.getCenterY());
+                player.render(screen);
                 screen.flipBuffer(this);
                 g.drawImage(image,0,0,getWidth(),getHeight(),null);
                 g.dispose();
@@ -169,6 +181,14 @@ public class Game extends Canvas implements Runnable{
     public static void main(String args[]){
                 Game game = new Game();
                 game.start();
+    }
+
+    public static int getWidthWindow(){
+           return WIDTH * SCALE;
+    }
+
+    public static int getHeightWindow(){
+        return HEIGHT * SCALE;
     }
 
     public boolean isRunning() {

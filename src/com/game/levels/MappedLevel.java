@@ -139,6 +139,18 @@ public class MappedLevel extends Level{
     public static final int DOOR1 = 0xff492a08;
 
 
+    //BASE SPRITESHEET
+
+    public static final int WATER = 0xff0000ff;
+    public static final int WALLB = 0xff0000f0;
+    public static final int WALLF = 0xffff0000;
+    public static final int PARQUET0 = 0xff179325;
+    public static final int WALLG = 0xff123400;
+    public static final int WALLR =  0xfff90000;
+    public static final int PARQUET1 =  0xff1f3400;
+    public static final int WALLO =  0xff1234f8;
+    public static final int SEWER  =  0xff123404;;
+
 
     public MappedLevel(String path){
             super(path);
@@ -148,8 +160,9 @@ public class MappedLevel extends Level{
             BufferedImage image = null;
             try {
                 image = ImageIO.read(getClass().getResource(path));
+
             } catch (IOException e) {
-                e.printStackTrace();
+               System.out.println("Erreur lors du chargement du level: "+path);
             }
             width = image.getWidth();
             height = image.getHeight();

@@ -2,15 +2,23 @@ package com.game.gfx;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.awt.image.ColorConvertOp;
 import java.io.IOException;
 
 public class SpriteSheet {
 
         // TODO: 23/04/2021 createSpriteSheet
 
-        public static SpriteSheet Tiles = new SpriteSheet("/res/stuff.png");
-        public static SpriteSheet Items = new SpriteSheet("/res/items.png");
+        //TileSets
+        public static final SpriteSheet Tiles = new SpriteSheet("/res/spritesheets/stuff.png");
+        public static final SpriteSheet Items = new SpriteSheet("/res/spritesheets/items.png");
+        public static final SpriteSheet Base =  new SpriteSheet("/res/spritesheets/base.png");
+
+        //Mobs
+        public static final SpriteSheet Player = new SpriteSheet("/res/spritesheets/mobs/master.png");
+
+        //Projectiles
+        public static final SpriteSheet Projectiles = new SpriteSheet("/res/spritesheets/projectiles.png");
+
 
         private String path;
         private int pixels[];
@@ -32,7 +40,6 @@ public class SpriteSheet {
             pixels = new int[width * height];
             image.getRGB(0,0,width,height,pixels,0,width);
 
-            System.out.println("Image Path: "+path+" Type: "+image.getType());
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,6 +1,9 @@
 package com.game.gfx;
 
 import com.game.Game;
+import com.game.entity.npcs.Mob;
+import com.game.entity.particals.Partical;
+import com.game.entity.projectiles.Projectile;
 import com.game.levels.Level;
 import com.game.levels.tiles.Tile;
 
@@ -52,7 +55,7 @@ public class Screen {
                 if(xp < -Level.TILE_SIZE || xp >= width || yp < 0 || yp >= height) break;
                 if(xp < 0) xp = 0;
                 int col = tile.getSprite().getPixels()[x + y * tile.getSprite().getWidth()];
-                if(col != 0xffff00ff) pixels[xp + yp * width] = col;
+                if(col != MASK_ALPHA) pixels[xp + yp * width] = col;
             }
         }
     }
@@ -67,8 +70,49 @@ public class Screen {
              }
         }
     }
-    
-   // TODO: 23/04/2021 renderSprite
+
+    public void renderMob(Mob mob, int xa,int ya){
+        xa-=xOffset;
+        ya-=yOffset;
+        for(int y=0;y<mob.getSprite().getHeight();y++){
+            int yp = y + ya;
+            for(int x=0;x<mob.getSprite().getWidth();x++) {
+                int xp = x + xa;
+                if(xp < 0 || xp >= width || yp <0  || yp >= height) continue;
+                int pixel =  mob.getSprite().getPixels()[x + y * mob.getSprite().getWidth()];
+                if(pixel != MASK_ALPHA) pixels[xp + yp * width] = pixel;
+            }
+        }
+    }
+
+    public void renderProjectile(Projectile projectile, int xa, int ya){
+        xa-=xOffset;
+        ya-=yOffset;
+        for(int y=0;y<projectile.getSprite().getHeight();y++){
+            int yp = y + ya;
+            for(int x=0;x<projectile.getSprite().getWidth();x++) {
+                int xp = x + xa;
+                if(xp < 0 || xp >= width || yp <0  || yp >= height) continue;
+                int pixel = projectile.getSprite().getPixels()[x + y * projectile.getSprite().getWidth()];
+                if(pixel != MASK_ALPHA) pixels[xp + yp * width] = pixel;
+            }
+        }
+    }
+
+    public void renderPartical(Partical partical, int xa, int ya){
+        xa-=xOffset;
+        ya-=yOffset;
+        for(int y=0;y<partical.getSprite().getHeight();y++){
+            int yp = y + ya;
+            for(int x=0;x<partical.getSprite().getWidth();x++) {
+                int xp = x + xa;
+                if(xp < 0 || xp >= width || yp <0  || yp >= height) continue;
+                 pixels[xp + yp * width] =  partical.getSprite().getPixels()[x + y * partical.getSprite().getWidth()];
+            }
+        }
+    }
+
+    // TODO: 23/04/2021 renderSprite
 
     public void renderSprite(Sprite sprite,int xa,int ya){
         for(int y=0;y<sprite.getHeight();y++){

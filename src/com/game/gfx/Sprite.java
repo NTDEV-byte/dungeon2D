@@ -137,27 +137,50 @@ public class Sprite {
         public static final Sprite SWORD = new Sprite(1,7,16,16,SpriteSheet.Items);
         public static final Sprite SWORD1  = new Sprite(2,7,16,16,SpriteSheet.Items);
 
-        /*
-        public static final Sprite CMPT_TL;
-        public static final Sprite CMPT_L0;
-        public static final Sprite CMPT_L1;
-        public static final Sprite CMPT_BL;
-
-        public static final Sprite CMPT_BL0;
-        public static final Sprite CMPT_BL1;
-        public static final Sprite CMPT_BL2;
-        public static final Sprite CMPT_BR;
-
-        public static final Sprite CMPT_TR;
-        public static final Sprite CMPT_R0;
-        public static final Sprite CMPT_R1;*/
-
-         // DOOR
-
+        // DOOR
         public static final Sprite DOOR0 = new Sprite(6,10,16,16,SpriteSheet.Items);
         public static final Sprite DOOR1 = new Sprite(6,11,16,16,SpriteSheet.Items);
 
+        //BASE
+        public static final Sprite WATER = new Sprite(0,0,16,16,SpriteSheet.Base);
+        public static final Sprite WALLB = new Sprite(1,0,16,16,SpriteSheet.Base);
+        public static final Sprite WALLF = new Sprite(2,0,16,16,SpriteSheet.Base);
+        public static final Sprite PARQUET0 = new Sprite(0,1,16,16,SpriteSheet.Base);
+        public static final Sprite WALLG = new Sprite(1,1,16,16,SpriteSheet.Base);
+        public static final Sprite WALLR = new Sprite(2,1,16,16,SpriteSheet.Base);
+        public static final Sprite PARQUET1 = new Sprite(0,2,16,16,SpriteSheet.Base);
+        public static final Sprite WALLO = new Sprite(1,2,16,16,SpriteSheet.Base);
+        public static final Sprite SEWER  = new Sprite(2,2,16,16,SpriteSheet.Base);
 
+
+        //MOBS
+
+        // Master UP
+        public static Sprite MASTER_UP0 = new Sprite(0,0,32,32,SpriteSheet.Player);
+        public static Sprite MASTER_UP1 = new Sprite(1,0,32,32,SpriteSheet.Player);
+        public static Sprite MASTER_UP2 = new Sprite(2,0,32,32,SpriteSheet.Player);
+
+        // Master RIGHT
+        public static Sprite MASTER_RIGHT0 = new Sprite(0,1,32,32,SpriteSheet.Player);
+        public static Sprite MASTER_RIGHT1 = new Sprite(1,1,32,32,SpriteSheet.Player);
+        public static Sprite MASTER_RIGHT2 = new Sprite(2,1,32,32,SpriteSheet.Player);
+
+        // Master DOWN
+        public static Sprite MASTER_DOWN0 = new Sprite(0,2,32,32,SpriteSheet.Player);
+        public static Sprite MASTER_DOWN1 = new Sprite(1,2,32,32,SpriteSheet.Player);
+        public static Sprite MASTER_DOWN2 = new Sprite(2,2,32,32,SpriteSheet.Player);
+
+        // Master LEFT
+        public static Sprite MASTER_LEFT0 = new Sprite(0,3,32,32,SpriteSheet.Player);
+        public static Sprite MASTER_LEFT1 = new Sprite(1,3,32,32,SpriteSheet.Player);
+        public static Sprite MASTER_LEFT2 = new Sprite(2,3,32,32,SpriteSheet.Player);
+
+        //Particals
+
+        public static Sprite PARTICAL = new Sprite(2,0xaaaaaa);
+
+        //Projectiles
+        public static Sprite PROJECTILE = new Sprite(0,0,5,5,SpriteSheet.Projectiles);
 
         private int x,y;
         private int width,height;
@@ -175,22 +198,33 @@ public class Sprite {
                      loadSprite();
                 }
 
-        private void loadSprite(){
-             for(int y=0;y<height;y++) {
-                 for (int x = 0; x < width; x++) {
-                     pixels[x + y * width] = sheet.getPixels()[(x + this.x) + (y + this.y) * sheet.getWidth()];
-                 }
-            }
-        }
+                public Sprite(int size,int color){
+                    this.width = size;
+                    this.height = size;
+                    this.pixels = new int[size * size];
+                    setColor(color);
+                }
+
+                private void setColor(int color){
+                    for(int i=0;i<pixels.length;i++){
+                         pixels[i] = color;
+                    }
+                }
+
+                private void loadSprite(){
+                         for(int y=0;y<height;y++) {
+                             for (int x = 0; x < width; x++) {
+                                 pixels[x + y * width] = sheet.getPixels()[(x + this.x) + (y + this.y) * sheet.getWidth()];
+                             }
+                        }
+                    }
 
     public int getX() {
         return x;
     }
-
     public int getY() {
         return y;
     }
-
     public int getWidth() {
         return width;
     }
@@ -203,6 +237,5 @@ public class Sprite {
     public SpriteSheet getSheet() {
         return sheet;
     }
-
 
 }
