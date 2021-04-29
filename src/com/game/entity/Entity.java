@@ -1,6 +1,7 @@
 package com.game.entity;
 
 import com.game.Game;
+import com.game.entity.npcs.Player;
 import com.game.gfx.Screen;
 import com.game.levels.Level;
 
@@ -11,9 +12,11 @@ public abstract class Entity {
     protected float x,y;
     protected float xDir,yDir;
     protected boolean alive;
-    protected Level level;
+    protected Level level = Game.level;
+    protected Player player = Game.player;
     protected Random random;
     protected int timer;
+
 
 
     public abstract void update();

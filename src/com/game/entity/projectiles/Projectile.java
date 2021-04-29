@@ -20,7 +20,7 @@ public class Projectile extends Entity {
                 this.y = y;
                 this.xOrigin = x;
                 this.yOrigin = y;
-                this.speed = 1;
+                this.speed = 3;
                 this.sprite = Sprite.PROJECTILE;
                 this.xDir = (float)(Math.cos(angle) * speed);
                 this.yDir = (float)(Math.sin(angle) * speed);
@@ -29,14 +29,19 @@ public class Projectile extends Entity {
 
     @Override
     public void update() {
-            x+=xDir;
-            y+=yDir;
+            if(level.collision((int)(x + xDir) , (int)(y+yDir))){
+                remove();
+                Generator.generateParticals(20,(int)x,(int)y, Game.level,false);
+            }
+            else{
+                x+=xDir;
+                y+=yDir;
+            }
             if(getDistanceTraveled() >= range){
                 remove();
                 Generator.generateParticals(10,(int)x,(int)y, Game.level);
             }
     }
-
 
     protected double getDistanceTraveled(){
             double dx = x - xOrigin;

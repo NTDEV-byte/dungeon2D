@@ -144,10 +144,10 @@ public class MappedLevel extends Level{
     public static final int WATER = 0xff0000ff;
     public static final int WALLB = 0xff0000f0;
     public static final int WALLF = 0xffff0000;
-    public static final int PARQUET0 = 0xff179325;
+    public static final int PARQUET0 = 0xff1f3400;
     public static final int WALLG = 0xff123400;
     public static final int WALLR =  0xfff90000;
-    public static final int PARQUET1 =  0xff1f3400;
+    public static final int PARQUET1 =  0xff179325;
     public static final int WALLO =  0xff1234f8;
     public static final int SEWER  =  0xff123404;;
 

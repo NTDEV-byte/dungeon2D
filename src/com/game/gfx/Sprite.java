@@ -1,5 +1,7 @@
 package com.game.gfx;
 
+import java.util.Random;
+
 public class Sprite {
 
         // TODO: 23/04/2021 create Sprites
@@ -178,6 +180,7 @@ public class Sprite {
         //Particals
 
         public static Sprite PARTICAL = new Sprite(2,0xaaaaaa);
+        public static Sprite RAND_PARTICAL = new Sprite(2,new Random().nextInt(0xffffff));
 
         //Projectiles
         public static Sprite PROJECTILE = new Sprite(0,0,5,5,SpriteSheet.Projectiles);
@@ -203,6 +206,12 @@ public class Sprite {
                     this.height = size;
                     this.pixels = new int[size * size];
                     setColor(color);
+                }
+
+                public Sprite(int width,int height,int pixels[]){
+                    this.width = width;
+                    this.height = height;
+                    this.pixels = pixels;
                 }
 
                 private void setColor(int color){

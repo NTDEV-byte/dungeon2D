@@ -1,10 +1,12 @@
 package com.game.levels;
 
 import com.game.entity.Entity;
+import com.game.entity.npcs.Mob;
 import com.game.entity.particals.Partical;
 import com.game.entity.projectiles.Projectile;
 import com.game.gfx.Screen;
 import com.game.levels.tiles.Tile;
+import com.game.utils.Generator;
 
 import java.sql.Array;
 import java.util.ArrayList;
@@ -15,15 +17,12 @@ public class Level {
     public static final int TILE_SIZE = 16;
     public static final Level SPAWN = new MappedLevel("/res/levels/spawn.png");
 
-
-
-
     protected int width;
     protected int height;
     protected int tiles[];
     protected List<Partical> particals;
     protected List<Projectile> projectiles;
-
+    protected List<Mob> mobs;
 
             public Level(int width,int height){
                 this.width = width;
@@ -40,8 +39,8 @@ public class Level {
             private void initialize(){
                 particals = new ArrayList<>();
                 projectiles = new ArrayList<>();
+                mobs = new ArrayList<>();
             }
-
 
             protected void loadLevel(String path){}
             protected void generateLevel(){}
@@ -50,8 +49,11 @@ public class Level {
                 if(e instanceof Partical){
                     particals.add((Partical) e);
                 }
-                else if(e instanceof  Projectile) {
-                    projectiles.add((Projectile) e);
+                else if(e instanceof Projectile) {
+                    projectiles.add((Projectile)e);
+                }
+                else if(e instanceof  Mob){
+                    mobs.add((Mob) e);
                 }
             }
 
@@ -62,11 +64,11 @@ public class Level {
                 for(Projectile p: projectiles) {
                     p.update();
                 }
-
+                for(Mob m: mobs) {
+                    m.update();
+                }
                 clean();
-                System.out.println(projectiles.size());
             }
-
 
             private void clean(){
                 //remove dead particals
@@ -80,7 +82,11 @@ public class Level {
                         projectiles.remove(i);
                     }
                 }
-
+                for(int i=0;i<mobs.size();i++){
+                    if(mobs.get(i).isAlive()){
+                        mobs.remove(i);
+                    }
+                }
             }
 
             public void render(Screen screen, int xScroll, int yScroll){
@@ -100,7 +106,13 @@ public class Level {
                 for(Projectile p: projectiles) {
                     p.render(screen);
                 }
+                for(Mob m: mobs) {
+                    m.render(screen);
+                }
+            }
 
+            public boolean collision(int xa,int ya){
+               return getTileByColor(xa >> 4 , ya >> 4).isSolid();
             }
 
             private Tile getTileByID(int x, int y)
@@ -119,7 +131,9 @@ public class Level {
                 return Tile.CARPETTL;
             }
 
-            private Tile getTileByColor(int x, int y)
+
+
+    public Tile getTileByColor(int x, int y)
             {
                 if(x < 0 || x >= width || y < 0 || y >= height) {return Tile.WALL;}
 
@@ -212,7 +226,6 @@ public class Level {
                 else if(tiles[x + y * width] == MappedLevel.BED_UP) {return Tile.BED_UP;}
                 else if(tiles[x + y * width] == MappedLevel.BED_BOTTOM) {return Tile.BED_BOTTOM;}
 
-
                 //DOWNSTAIR
 
                 else if(tiles[x + y * width] == MappedLevel.DOWNSTAIR_RIGHT0) {return Tile.DOWNSTAIR_UP;}
@@ -233,7 +246,6 @@ public class Level {
                 else if(tiles[x + y * width] == MappedLevel.BILLIARD_BL) {return Tile.BILLIARD_BL;}
                 else if(tiles[x + y * width] == MappedLevel.BILLIARD_TR) {return Tile.BILLIARD_TR;}
                 else if(tiles[x + y * width] == MappedLevel.BILLIARD_BR) {return Tile.BILLIARD_BR;}
-
 
                 //SWORDS
 
@@ -258,11 +270,26 @@ public class Level {
                 else if(tiles[x + y * width] == MappedLevel.WALLO) {return Tile.WALLO;}
                 else if(tiles[x + y * width] == MappedLevel.SEWER) {return Tile.SEWER;}
 
-
-
-
-
                 return Tile.WALL;
             }
+
+    public List<Partical> getParticals() {
+        return particals;
+    }
+    public void setParticals(List<Partical> particals) {
+        this.particals = particals;
+    }
+    public List<Projectile> getProjectiles() {
+        return projectiles;
+    }
+    public void setProjectiles(List<Projectile> projectiles) {
+        this.projectiles = projectiles;
+    }
+    public List<Mob> getMobs() {
+        return mobs;
+    }
+    public void setMobs(List<Mob> mobs) {
+        this.mobs = mobs;
+    }
 
 }

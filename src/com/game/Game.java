@@ -9,17 +9,23 @@ import java.awt.image.DataBufferInt;
 
 import javax.swing.JFrame;
 
+import com.game.entity.npcs.Girl;
 import com.game.entity.npcs.Player;
 import com.game.gfx.Screen;
 import com.game.gfx.Sprite;
+import com.game.gfx.SpriteSheet;
 import com.game.input.InputHandler;
+import com.game.levels.Camera;
 import com.game.levels.Level;
 import com.game.utils.Generator;
 
 public class Game extends Canvas implements Runnable{
 
     // TODO: EngineBase Game , GameLoop  XXX
-    // TODO: Graphics Screen , SpriteSheet , Sprite XXX
+    // TODO: Graphics Screen XXX
+    // TODO  SpriteSheet XXX
+    // TODO  Sprite XXX
+    // TODO  SpriteAnimator
     /**************************************************/
     // TODO: Level System   XXX
     /**************************************************/
@@ -31,22 +37,24 @@ public class Game extends Canvas implements Runnable{
     // TODO:  Entity System
     /**************************************************/
     // TODO: 25/04/2021  Entity System XXX
+    // TODO  25/04/2021  MOBS  + Player XXX
     // TODO: 25/04/2021  Particals XXX
     // TODO: 25/04/2021  Projectiles XXX
-    /*****************************************************
-    //  // TODO:  Entity Interactions
-    //****************************************************/
-    // TODO: 25/04/2021 PlayerShoots XXX
-    /******************************************************/
-    // TODO: 25/04/2021 Intelligent Mobs System A*
-    // TODO: 25/04/2021 Entity System
-    // TODO: 25/04/2021 Camera
+    // TODO: 25/04/2021  PlayerShoots XXX
+    // TODO: 25/04/2021  Intelligent Mobs System A* XXX
+    // TODO: 25/04/2021  Camera XXX
     /****************************************************/
     // TODO: Collisions
     /****************************************************/
-    // TODO: Mob VS World
-    // TODO: Mob VS Particals
+    // TODO: Mob VS World XXX
+    // TODO: Mob VS Particals XXX
     // TODO: Mob VS Mob
+    /*****************************************************
+    // TODO:  Entity Interactions
+    //****************************************************/
+
+    /*****************************************************/
+
     /**************************************************/
     // TODO: Font
     /**************************************************/
@@ -71,18 +79,20 @@ public class Game extends Canvas implements Runnable{
 
 
             public static final int WIDTH = 300;
-            public static final int HEIGHT = WIDTH * 9 / 16;
+            public static final int HEIGHT = 168;
             public static final int SCALE = 3;
-            public static Level level;
+            public static Level level = Level.SPAWN;;
+            public static InputHandler input;
+            public static Player player;
             private boolean running;
             private Thread thread;
             private JFrame window;
             private BufferedImage image = new BufferedImage(WIDTH,HEIGHT,BufferedImage.TYPE_INT_RGB);
             private Screen screen;
-            private InputHandler input;
-            private int pixels[] = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
-            private Player player;
 
+            private int pixels[] = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
+            private Girl girl;
+            private Camera camera;
 
            public Game(){
             initialize();
@@ -92,9 +102,10 @@ public class Game extends Canvas implements Runnable{
         private void initialize(){
           screen = new Screen(WIDTH,HEIGHT);
           input = new InputHandler();
-          level = Level.SPAWN;
           player = new Player(0,0,input);
           player.setLevel(level);
+          camera = new Camera(level,screen);
+          Generator.generateMobs(10,0,0,level);
         }
 
         private void setView(){
@@ -140,7 +151,7 @@ public class Game extends Canvas implements Runnable{
                 }
                 // draw part
                 Graphics g = bs.getDrawGraphics();
-                level.render(screen,player.getCenterX(),player.getCenterY());
+                camera.followPlayer();
                 player.render(screen);
                 screen.flipBuffer(this);
                 g.drawImage(image,0,0,getWidth(),getHeight(),null);

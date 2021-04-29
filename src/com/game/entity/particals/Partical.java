@@ -25,6 +25,17 @@ public class Partical extends Entity {
         }
 
 
+    public Partical(float x,float y,int life,boolean randColorOnce){
+        this.x = x;
+        this.y = y;
+        this.random = new Random();
+        this.sprite = (randColorOnce) ? Sprite.RAND_PARTICAL : new Sprite(2,random.nextInt(0xffffff));
+        this.xDir = (float)random.nextGaussian();
+        this.yDir = (float)random.nextGaussian();
+        this.life = life + random.nextInt(MAX_DURATION);
+    }
+
+
     @Override
     public void update(){
      if(timer < 7500) timer++; else timer = 0;

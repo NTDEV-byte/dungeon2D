@@ -145,17 +145,17 @@ public class Tile {
 
 
     public static final Tile WATER   =  new Tile(Sprite.WATER);
-    public static final Tile WALLB =  new Tile(Sprite.WALLB);
-    public static final Tile WALLF  =  new Tile(Sprite.WALLF);
+    public static final Tile WALLB =  new Wall(Sprite.WALLB);
+    public static final Tile WALLF  =  new Wall(Sprite.WALLF);
 
 
     public static final Tile PARQUET0   =  new Tile(Sprite.PARQUET0);
-    public static final Tile WALLG =  new Tile(Sprite.WALLG);
-    public static final Tile WALLR  =  new Tile(Sprite.WALLR);
+    public static final Tile WALLG =  new Wall(Sprite.WALLG);
+    public static final Tile WALLR  =  new Wall(Sprite.WALLR);
 
 
     public static final Tile PARQUET1   =  new Tile(Sprite.PARQUET1);
-    public static final Tile WALLO =  new Tile(Sprite.WALLO);
+    public static final Tile WALLO =  new Wall(Sprite.WALLO);
     public static final Tile SEWER  =  new Tile(Sprite.SEWER);
 
 

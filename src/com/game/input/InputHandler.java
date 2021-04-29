@@ -5,9 +5,8 @@ import java.awt.event.*;
 public class InputHandler implements KeyListener, MouseListener, MouseMotionListener {
 
     private boolean keys[] = new boolean[2048];
-    public boolean up,right,down,left,space;
+    public boolean up,right,down,left,space,n,p;
     public int x,y,mButton;
-
 
     public void update(){
         up = keys[KeyEvent.VK_UP] || keys[KeyEvent.VK_Z];
@@ -15,6 +14,8 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
         down = keys[KeyEvent.VK_DOWN] || keys[KeyEvent.VK_S];
         left = keys[KeyEvent.VK_LEFT] || keys[KeyEvent.VK_Q];
         space = keys[KeyEvent.VK_SPACE];
+        n =  keys[KeyEvent.VK_N];
+        p =  keys[KeyEvent.VK_P];
     }
 
     @Override

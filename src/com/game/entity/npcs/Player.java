@@ -64,6 +64,54 @@ public class Player extends Mob{
         }
     }
 
+    protected void updateSprite(){
+        switch (direction){
+            case UP:
+                sprite = Sprite.MASTER_UP0;
+                if(moving){
+                    if(timer % RATE_ANIMATION >= 10) {
+                        sprite = Sprite.MASTER_UP1;
+                    }
+                    else {
+                        sprite = Sprite.MASTER_UP2;
+                    }
+                }
+                break;
+            case RIGHT:
+                sprite = Sprite.MASTER_RIGHT0;
+                if(moving){
+                    if(timer % RATE_ANIMATION >= 10) {
+                        sprite = Sprite.MASTER_RIGHT1;
+                    }
+                    else {
+                        sprite = Sprite.MASTER_RIGHT2;
+                    }
+                }
+                break;
+            case DOWN:
+                sprite = Sprite.MASTER_DOWN0;
+                if(moving){
+                    if(timer % RATE_ANIMATION >= 10) {
+                        sprite = Sprite.MASTER_DOWN1;
+                    }
+                    else {
+                        sprite = Sprite.MASTER_DOWN2;
+                    }
+                }
+                break;
+            case LEFT:
+                sprite = Sprite.MASTER_LEFT0;
+                if(moving){
+                    if(timer % RATE_ANIMATION >= 10) {
+                        sprite = Sprite.MASTER_LEFT1;
+                    }
+                    else {
+                        sprite = Sprite.MASTER_LEFT2;
+                    }
+                }
+                break;
+        }
+    }
 
 
 }
