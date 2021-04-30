@@ -20,8 +20,7 @@ public class Generator {
 
             public static void generateParticals(int amount,int x, int y, Level level){
                     for(int i=0;i<amount;i++) {
-                      Partical p =   new Partical(x,y,5);
-                      p.setLevel(level);
+                      Partical p =  new Partical(x,y,5);
                       level.addEntity(p);
                     }
                 }
@@ -29,7 +28,6 @@ public class Generator {
             public static void generateParticals(int amount,int x, int y, Level level,boolean Randcolor){
                 for(int i=0;i<amount;i++) {
                     Partical p =   new Partical(x,y,5,Randcolor);
-                    p.setLevel(level);
                     level.addEntity(p);
                 }
             }

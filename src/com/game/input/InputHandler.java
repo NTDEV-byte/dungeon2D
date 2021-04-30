@@ -41,7 +41,7 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
     @Override
     public void mousePressed(MouseEvent e) {
             mButton = e.getButton();
-            System.out.println("pressed !");
+            //System.out.println("pressed !");
     }
 
     @Override

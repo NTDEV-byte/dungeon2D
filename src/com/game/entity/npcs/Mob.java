@@ -3,9 +3,11 @@ package com.game.entity.npcs;
 import com.game.entity.Entity;
 import com.game.entity.projectiles.MasterProjectile;
 import com.game.entity.projectiles.Projectile;
+import com.game.font.DGFont;
 import com.game.gfx.Screen;
 import com.game.gfx.Sprite;
 import com.game.gfx.VisualAspect;
+import com.game.utils.Generator;
 import com.game.utils.Node;
 import com.game.utils.PathFinder;
 import com.game.utils.Vector2i;
@@ -19,9 +21,13 @@ public abstract class Mob extends Entity {
         public static final int RIGHT = 1;
         public static final int DOWN = 2;
         public static final int LEFT = 3;
+
         public static final int RATE_ANIMATION = 30;
         public static final int RATE_DIRECTION = 80;
         public static final int RATE_SEARCH_PATH = 30;
+
+        public static final int PARTICALS_ON_DEATH = 40;
+
 
 
         protected Sprite sprite;
@@ -29,45 +35,57 @@ public abstract class Mob extends Entity {
         protected int xDir,yDir;
         protected VisualAspect vAspect;
         protected List<Node> path;
-        protected boolean moving;
+        protected boolean moving,collidingMob;
+        protected int life = 100;
 
         public Mob(){
             random = new Random();
         }
 
-    public void shoot(double angle){
-        Projectile p = new MasterProjectile(x,y,angle);
-        p.setLevel(level);
-        level.addEntity(p);
-     }
-
-    public void move(int xDir, int yDir){
-        if(xDir != 0 && yDir != 0) {
-                move(xDir,0);
-                move(0,yDir);
-                return;
-          }
-            if(xDir < 0){
-                direction = LEFT;
-            }
-            if(xDir > 0){
-                direction = RIGHT;
-            }
-            if(yDir < 0){
-                direction = UP;
-            }
-            if(yDir > 0){
-                direction = DOWN;
-            }
-            if(!collision(xDir,yDir)){
-                 x+=xDir;
-                 y+=yDir;
-            }
-        }
-
+        @Override
         public void update(){
             moveRandomlly();
         }
+
+        @Override
+        public void render(Screen screen) {
+            screen.renderMob(this,(int)(x - 16),(int)(y - 16));
+        }
+
+    /***********BEHAVIOUR**********/
+
+    public void move(int xDir, int yDir){
+        if(xDir != 0 && yDir != 0) {
+            move(xDir,0);
+            move(0,yDir);
+            return;
+        }
+        if(xDir < 0){
+            direction = LEFT;
+        }
+        if(xDir > 0){
+            direction = RIGHT;
+        }
+        if(yDir < 0){
+            direction = UP;
+        }
+        if(yDir > 0){
+            direction = DOWN;
+        }
+        if(!collision(xDir,yDir)){
+            x+=xDir;
+            y+=yDir;
+        }
+    }
+
+    protected void updateSprite(){
+        if(moving){
+            vAspect.animate(direction);
+            sprite = vAspect.getSprite();
+        }
+    }
+
+    /**********RANDOM MOVEMENTS *************/
 
         protected void moveRandomlly(){
             if(timer < 7500) timer++; else timer = 0;
@@ -82,12 +100,19 @@ public abstract class Mob extends Entity {
             else{
                 moving = false;
             }
+            collisionProjectiles();
+            collisionMob();
             updateSprite();
         }
+
+    /********** Intelligent Movements *************/
+    /********** Track Player ****************/
 
         protected void followPlayer(){
             findPath();
             followPath();
+            collisionMob();
+            collisionProjectiles();
         }
 
         // findPathToPlayer
@@ -114,7 +139,6 @@ public abstract class Mob extends Entity {
 
                 }
             }
-
             if(xDir != 0 || yDir != 0){
                 move(xDir,yDir);
                 moving = true;
@@ -127,21 +151,48 @@ public abstract class Mob extends Entity {
         }
 
 
-        protected void updateSprite(){
-            if(moving){
-                vAspect.animate(direction);
-                sprite = vAspect.getSprite();
-            }
-        }
+    /*******************ACTIONS********************/
+
+    public void shoot(double angle){
+             Projectile p = new MasterProjectile(x,y,angle);
+             p.setLevel(level);
+             level.addEntity(p);
+    }
+
+
+    /*****************COLLISIONS********************/
 
         public boolean collision(int xa,int ya){
             return level.collision((int)x + xDir , (int)y + yDir);
         }
 
-    @Override
-    public void render(Screen screen) {
-        screen.renderMob(this,(int)(x - 16),(int)(y - 16));
-    }
+        private void collisionProjectiles(){
+            List<Projectile> projectiles = level.getProjectiles();
+            for(int i=0;i<projectiles.size();i++){
+                  if(getWorldPosition().colliding(projectiles.get(i).getWorldPosition())){
+                            projectiles.get(i).remove();
+                            life--;
+                            if(onDeath()){
+                                 Generator.generateParticals(PARTICALS_ON_DEATH,projectiles.get(i).getX() , projectiles.get(i).getY() ,level);
+                                 remove();
+                            }
+                  }
+            }
+        }
+
+
+    private void collisionMob(){
+            List<Mob> mobs = level.getMobs();
+            for(int i=0;i<mobs.size();i++){
+                 if(getWorldPosition().colliding(mobs.get(i).getWorldPosition()) && this != (mobs.get(i))){
+
+                     collidingMob = true;
+                 }
+                 else{
+                     collidingMob = false;
+                 }
+            }
+        }
 
     public Sprite getSprite() {
         return sprite;
@@ -161,6 +212,17 @@ public abstract class Mob extends Entity {
 
     public boolean isMoving() {
         return moving;
+    }
+
+    public boolean isCollidingWithMob() {
+        return collidingMob;
+    }
+
+
+    private boolean onDeath(){
+      boolean dead = life <= 0;
+      life = (dead) ? 0 : life;
+      return dead;
     }
 
     public void setMoving(boolean moving) {

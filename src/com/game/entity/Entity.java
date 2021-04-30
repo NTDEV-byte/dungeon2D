@@ -4,6 +4,7 @@ import com.game.Game;
 import com.game.entity.npcs.Player;
 import com.game.gfx.Screen;
 import com.game.levels.Level;
+import com.game.utils.Vector2i;
 
 import java.util.Random;
 
@@ -11,7 +12,7 @@ public abstract class Entity {
 
     protected float x,y;
     protected float xDir,yDir;
-    protected boolean alive;
+    protected boolean dead;
     protected Level level = Game.level;
     protected Player player = Game.player;
     protected Random random;
@@ -23,7 +24,7 @@ public abstract class Entity {
     public abstract void render(Screen screen);
 
     public void remove(){
-        alive = true;
+        dead = true;
     }
 
     public int getX() {
@@ -50,12 +51,12 @@ public abstract class Entity {
         this.y = y;
     }
 
-    public boolean isAlive() {
-        return alive;
+    public boolean isDead() {
+        return dead;
     }
 
-    public void setAlive(boolean alive) {
-        this.alive = alive;
+    public void setDead(boolean dead) {
+        this.dead = dead;
     }
 
     public Level getLevel() {
@@ -73,4 +74,10 @@ public abstract class Entity {
     public void setRandom(Random random) {
         this.random = random;
     }
+
+    public Vector2i getWorldPosition(){
+        return new Vector2i(getX() >> 4 , getY() >> 4);
+    }
+
+
 }

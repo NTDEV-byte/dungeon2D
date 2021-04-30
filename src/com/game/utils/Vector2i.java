@@ -1,5 +1,7 @@
 package com.game.utils;
 
+import com.game.entity.Entity;
+
 import java.util.Vector;
 
 public class Vector2i {
@@ -17,6 +19,11 @@ public class Vector2i {
                  this.y = vector.y;
             }
 
+            public Vector2i(Entity e){
+                 this.x = e.getX();
+                 this.y = e.getY();
+            }
+
             public Vector2i add(int amnt){
                 return new Vector2i(x + amnt, y + amnt);
             }
@@ -29,16 +36,18 @@ public class Vector2i {
                 return new Vector2i(x - amnt, y - amnt);
             }
 
+
             public Vector2i substract(Vector2i vector){
                 return new Vector2i(x - vector.x , y - vector.y);
             }
 
+            public boolean colliding(Vector2i entity){
+                  return this.x == entity.x && this.y == entity.y;
+            }
 
             public boolean equals(Object obj){
                 if(!(obj instanceof Vector2i)) return false;
-
                 Vector2i vector = (Vector2i)    obj;
-
                 return this.x == vector.x && this.y == vector.y;
              }
 }

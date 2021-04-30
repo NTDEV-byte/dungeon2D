@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 
 import com.game.entity.npcs.Girl;
 import com.game.entity.npcs.Player;
+import com.game.font.DGFont;
 import com.game.gfx.Screen;
 import com.game.gfx.Sprite;
 import com.game.gfx.SpriteSheet;
@@ -18,6 +19,7 @@ import com.game.input.InputHandler;
 import com.game.levels.Camera;
 import com.game.levels.Level;
 import com.game.utils.Generator;
+import com.game.utils.IMGFilter;
 
 public class Game extends Canvas implements Runnable{
 
@@ -29,52 +31,52 @@ public class Game extends Canvas implements Runnable{
     /**************************************************/
     // TODO: Level System   XXX
     /**************************************************/
-    // TODO: 25/04/2021  Level Class XXX
-    // TODO: 25/04/2021  RandomLevel , MappedLevel XXX
-    // TODO: 25/04/2021  Tiles System and logic XXX
+    // TODO: Level Class XXX
+    // TODO: RandomLevel , MappedLevel XXX
+    // TODO: Tiles System and logic XXX
     // TODO: Design Levels XXX
     /**************************************************/
     // TODO:  Entity System
     /**************************************************/
-    // TODO: 25/04/2021  Entity System XXX
-    // TODO  25/04/2021  MOBS  + Player XXX
-    // TODO: 25/04/2021  Particals XXX
-    // TODO: 25/04/2021  Projectiles XXX
-    // TODO: 25/04/2021  PlayerShoots XXX
-    // TODO: 25/04/2021  Intelligent Mobs System A* XXX
-    // TODO: 25/04/2021  Camera XXX
+    // TODO: Entity System XXX
+    // TODO  MOBS  + Player XXX
+    // TODO: Particals XXX
+    // TODO: Projectiles XXX
+    // TODO: PlayerShoots XXX
+    // TODO: Intelligent Mobs System A* XXX
+    // TODO: Camera XXX
     /****************************************************/
     // TODO: Collisions
     /****************************************************/
     // TODO: Mob VS World XXX
-    // TODO: Mob VS Particals XXX
-    // TODO: Mob VS Mob
-    /*****************************************************
-    // TODO:  Entity Interactions
-    //****************************************************/
-
-    /*****************************************************/
-
+    // TODO: Projectile VS  World XXX
+    // TODO: Mob VS Projectile XXX
+    // TODO: Mob VS Mob XXX
     /**************************************************/
     // TODO: Font
     /**************************************************/
-    // TODO: 25/04/2021  Font
-    /**************************************************/
-    // TODO: Level Interactions
-    /**************************************************/
-    // TODO: 25/04/2021  Level Interactions (collisions , interaction , messages)
-    // TODO: 25/04/2021  Sound Effetcs
-    // TODO: 25/04/2021  Effect Exploisions portals ...
+    // TODO: Font XXX
     /**************************************************/
     // TODO: Utils
     /**************************************************/
-    // TODO: ImageUtils
-    // TODO: Sprite Rotation
+    // TODO: ImageFilter XXX
     /**************************************************/
-    // TODO: UI
+    // TODO: Level Interactions
     /**************************************************/
-    // TODO: 25/04/2021  InnerUI
-    // TODO: 25/04/2021  External UI
+    // TODO: Level Interactions (collisions , interaction , messages)
+    // TODO: Sound Effetcs
+    // TODO: Effect Exploisions portals ...
+    // TODO: DayNightCycle
+    /*****************************************************
+     //TODO: Entity Interactions
+     //****************************************************/
+     //TODO: Shoot Different Projectiles
+     //TODO: Inventory
+    /**************************************************/
+     //TODO: UI
+    /**************************************************/
+     //TODO: InnerUI
+     //TODO: External UI
     /**************************************************/
 
 

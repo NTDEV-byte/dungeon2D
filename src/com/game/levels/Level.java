@@ -4,16 +4,17 @@ import com.game.entity.Entity;
 import com.game.entity.npcs.Mob;
 import com.game.entity.particals.Partical;
 import com.game.entity.projectiles.Projectile;
+import com.game.font.DGFont;
 import com.game.gfx.Screen;
 import com.game.levels.tiles.Tile;
-import com.game.utils.Generator;
+import com.game.utils.IMGFilter;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Level {
 
+    public static final float BRIGHTNESS_FACTOR = 1.0f;
     public static final int TILE_SIZE = 16;
     public static final Level SPAWN = new MappedLevel("/res/levels/spawn.png");
 
@@ -23,6 +24,8 @@ public class Level {
     protected List<Partical> particals;
     protected List<Projectile> projectiles;
     protected List<Mob> mobs;
+
+
 
             public Level(int width,int height){
                 this.width = width;
@@ -40,6 +43,7 @@ public class Level {
                 particals = new ArrayList<>();
                 projectiles = new ArrayList<>();
                 mobs = new ArrayList<>();
+
             }
 
             protected void loadLevel(String path){}
@@ -73,23 +77,25 @@ public class Level {
             private void clean(){
                 //remove dead particals
                 for(int i=0;i<particals.size();i++){
-                    if(particals.get(i).isAlive()){
+                    if(particals.get(i).isDead()){
                         particals.remove(i);
                     }
                 }
                 for(int i=0;i<projectiles.size();i++){
-                    if(projectiles.get(i).isAlive()){
+                    if(projectiles.get(i).isDead()){
                         projectiles.remove(i);
                     }
                 }
                 for(int i=0;i<mobs.size();i++){
-                    if(mobs.get(i).isAlive()){
+                    if(mobs.get(i).isDead()){
                         mobs.remove(i);
                     }
                 }
             }
 
-            public void render(Screen screen, int xScroll, int yScroll){
+
+
+    public void render(Screen screen, int xScroll, int yScroll){
                 screen.setOffset(xScroll,yScroll);
                 int x0 = xScroll >> 4;
                 int x1 = xScroll + screen.getWidth() + TILE_SIZE >> 4;
@@ -108,7 +114,16 @@ public class Level {
                 }
                 for(Mob m: mobs) {
                     m.render(screen);
+                    if(m.isCollidingWithMob()){
+                        DGFont.WorldMessage(screen , "oupsi !" , m.getX() >> 4, m.getY() >> 4);
+                    }
                 }
+
+                DGFont.WorldMessage(screen , "ntdev-byte" , 6,5);
+                DGFont.WorldMessage(screen , "ntdev-byte" , 37,51);
+
+
+                IMGFilter.brighten(screen.getPixels(), BRIGHTNESS_FACTOR);
             }
 
             public boolean collision(int xa,int ya){
@@ -135,7 +150,7 @@ public class Level {
 
     public Tile getTileByColor(int x, int y)
             {
-                if(x < 0 || x >= width || y < 0 || y >= height) {return Tile.WALL;}
+                if(x < 0 || x >= width || y < 0 || y >= height) {return Tile.PARQUET1;}
 
                 else if(tiles[x + y * width] == MappedLevel.HEAD_PILLAR) {return Tile.HEAD_PILLAR;}
                 else if(tiles[x + y * width] == MappedLevel.BODY_PILLAR) {return Tile.BODY_PILLAR;}
@@ -270,7 +285,7 @@ public class Level {
                 else if(tiles[x + y * width] == MappedLevel.WALLO) {return Tile.WALLO;}
                 else if(tiles[x + y * width] == MappedLevel.SEWER) {return Tile.SEWER;}
 
-                return Tile.WALL;
+                return Tile.PARQUET1;
             }
 
     public List<Partical> getParticals() {
@@ -291,5 +306,6 @@ public class Level {
     public void setMobs(List<Mob> mobs) {
         this.mobs = mobs;
     }
+
 
 }

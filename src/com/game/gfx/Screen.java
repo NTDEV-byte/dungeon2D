@@ -125,6 +125,36 @@ public class Screen {
         }
     }
 
+
+    //Font rendering
+
+    public void renderFont(Sprite sprite,int xa,int ya){
+        for(int y=0;y<sprite.getHeight();y++){
+            int yp = y + ya;
+            for(int x=0;x<sprite.getWidth();x++){
+                int xp = x + xa;
+                if(xp < 0 || xp >= width || yp < 0 || yp >= height) continue;
+                int pixel = sprite.getPixels()[x + y * sprite.getWidth()];
+                if(pixel != MASK_ALPHA ) pixels[xp + yp * width] = pixel;
+            }
+        }
+    }
+
+    public void renderFontWorld(Sprite sprite,int xa,int ya){
+        xa-=xOffset;
+        ya-=yOffset;
+        for(int y=0;y<sprite.getHeight();y++){
+            int yp = y + ya;
+            for(int x=0;x<sprite.getWidth();x++){
+                int xp = x + xa;
+                if(xp < 0 || xp >= width || yp < 0 || yp >= height) continue;
+                int pixel = sprite.getPixels()[x + y * sprite.getWidth()];
+                if(pixel != MASK_ALPHA ) pixels[xp + yp * width] = pixel;
+            }
+        }
+    }
+
+
     public void clear() {
         for (int i = 0; i < pixels.length; i++) {
             pixels[i] = 0x0;

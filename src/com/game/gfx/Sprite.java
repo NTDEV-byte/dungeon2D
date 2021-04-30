@@ -226,7 +226,37 @@ public class Sprite {
                                  pixels[x + y * width] = sheet.getPixels()[(x + this.x) + (y + this.y) * sheet.getWidth()];
                              }
                         }
+        }
+
+       public static Sprite[] crop(SpriteSheet sheet,int spriteWidth,int spriteHeight){
+
+                    int sW = sheet.getWidth();
+                    int sH = sheet.getHeight();
+
+                    // total sprites horizontally in the spriteSheet
+                    int tSW = sW / spriteWidth;
+                    // total sprites vertically in the spriteSheet
+                    int tSH = sH / spriteHeight;
+
+                    Sprite[] sprites = new Sprite[tSW * tSH];
+                    int pixels[];
+                    int totalExtracted = 0;
+
+                    for(int y=0;y<tSH;y++){
+                         for(int x=0;x<tSW;x++){
+                            pixels = new int[spriteWidth * spriteHeight];
+                             for(int y1=0;y1<spriteHeight;y1++){
+                                  for(int x1=0;x1<spriteWidth;x1++){
+                                        pixels[x1 + y1 * spriteWidth] = sheet.getPixels()[(x1 + x * spriteWidth) + (y1 + y * spriteHeight) * sheet.getWidth()];
+                                  }
+                             }
+                            sprites[totalExtracted++] = new Sprite(spriteWidth,spriteHeight,pixels);
+                         }
                     }
+                        return sprites;
+                    }
+
+
 
     public int getX() {
         return x;
