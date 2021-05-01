@@ -2,11 +2,14 @@ package com.game.gfx;
 
 public class SpriteAnimator {
 
-    private int timer;
-    private int rate;
-    private int image;
-    private Sprite sprite;
-    private SpriteSheet spriteSheet;
+    protected int timer;
+    protected int rate;
+    protected int image;
+    protected Sprite sprite;
+    protected SpriteSheet spriteSheet;
+    protected Sprite sprites[];
+
+
 
          public SpriteAnimator(SpriteSheet sheet){
                     this.spriteSheet = sheet;
@@ -14,7 +17,13 @@ public class SpriteAnimator {
                     this.sprite = sheet.getSprites()[0];
                 }
 
-         public void update(){
+                public SpriteAnimator(Sprite sprites[]){
+                    this.rate = 5;
+                    this.sprites = sprites;
+                    this.sprite = sprites[0];
+                }
+
+            public void update(){
                     if(timer < 7500) timer++; else timer = 0;
                     if(timer % rate == 0) {
                         if(image < spriteSheet.getSprites().length - 1) {

@@ -77,7 +77,7 @@ public class PathFinder {
                         int xi = (i % 3) - 1;
                         int yi = (i / 3) - 1;
 
-                       Tile tile = level.getTileByColor(x + xi , y + yi);
+                       Tile tile = level.getBlockUsingColor(x + xi , y + yi);
 
                        if(tile == null) continue;
                        if(tile.isSolid()) continue;;

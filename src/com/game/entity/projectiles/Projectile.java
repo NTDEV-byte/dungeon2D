@@ -1,6 +1,8 @@
 package com.game.entity.projectiles;
 
 import com.game.Game;
+import com.game.effects.Effect;
+import com.game.effects.Explosion;
 import com.game.entity.Entity;
 import com.game.gfx.Screen;
 import com.game.gfx.Sprite;
@@ -31,7 +33,8 @@ public class Projectile extends Entity {
     public void update() {
             if(level.collision((int)(x + xDir) , (int)(y+yDir))){
                 remove();
-                Generator.generateParticals(20,(int)x,(int)y, Game.level,false);
+                level.addEntity(new Effect("/res/effects/Explosion.png" ,(int) (x + xDir) , (int) (y + yDir) , 96 , 96 , 0xffaf6b26));
+               // Generator.generateParticals(20,(int)x,(int)y, Game.level,false);
             }
             else{
                 x+=xDir;

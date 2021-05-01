@@ -8,7 +8,7 @@ import com.game.utils.Vector2i;
 
 import java.util.Random;
 
-public abstract class Entity {
+public abstract class Entity implements VisibleObj {
 
     protected float x,y;
     protected float xDir,yDir;

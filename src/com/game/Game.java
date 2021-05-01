@@ -9,9 +9,11 @@ import java.awt.image.DataBufferInt;
 
 import javax.swing.JFrame;
 
+import com.game.effects.Effect;
 import com.game.entity.npcs.Girl;
 import com.game.entity.npcs.Player;
 import com.game.font.DGFont;
+import com.game.gfx.EffectAnimator;
 import com.game.gfx.Screen;
 import com.game.gfx.Sprite;
 import com.game.gfx.SpriteSheet;
@@ -63,10 +65,10 @@ public class Game extends Canvas implements Runnable{
     /**************************************************/
     // TODO: Level Interactions
     /**************************************************/
-    // TODO: Level Interactions (collisions , interaction , messages)
+    //  TODO: DayNightCycle XXX
+    // TODO: Level Interactions (collisions , interaction , messages) XXX
     // TODO: Sound Effetcs
     // TODO: Effect Exploisions portals ...
-    // TODO: DayNightCycle
     /*****************************************************
      //TODO: Entity Interactions
      //****************************************************/
@@ -143,6 +145,7 @@ public class Game extends Canvas implements Runnable{
                 input.update();
                 player.update();
                 level.update();
+                Effect.CIRCLE.update();
             }
 
             public void render(){

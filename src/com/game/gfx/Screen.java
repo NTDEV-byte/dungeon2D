@@ -1,6 +1,7 @@
 package com.game.gfx;
 
 import com.game.Game;
+import com.game.effects.Effect;
 import com.game.entity.npcs.Mob;
 import com.game.entity.particals.Partical;
 import com.game.entity.projectiles.Projectile;
@@ -120,7 +121,24 @@ public class Screen {
             for(int x=0;x<sprite.getWidth();x++){
                 int xp = x + xa;
                 if(xp < 0 || xp >= width || yp < 0 || yp >= height) continue;
-                pixels[xp + yp * width] = sprite.getPixels()[x + y * sprite.getWidth()];
+                int pixel = sprite.getPixels()[x + y * sprite.getWidth()];
+                if(pixel!=MASK_ALPHA) pixels[xp + yp * width] = pixel;
+            }
+        }
+    }
+
+//af6b26
+
+    public void renderSprite(Effect effect, int xa, int ya , int color){
+        xa-=xOffset;
+        ya-=yOffset;
+        for(int y=0;y<effect.getSprite().getHeight();y++){
+            int yp = y + ya;
+            for(int x=0;x<effect.getSprite().getWidth();x++){
+                int xp = x + xa;
+                if(xp < 0 || xp >= width || yp < 0 || yp >= height) continue;
+                int pixel = effect.getSprite().getPixels()[x + y * effect.getSprite().getWidth()];
+                if(pixel!=color) pixels[xp + yp * width] = pixel;
             }
         }
     }

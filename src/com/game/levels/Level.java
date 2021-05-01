@@ -1,5 +1,7 @@
 package com.game.levels;
 
+import com.game.Game;
+import com.game.effects.Effect;
 import com.game.entity.Entity;
 import com.game.entity.npcs.Mob;
 import com.game.entity.particals.Partical;
@@ -14,7 +16,12 @@ import java.util.List;
 
 public class Level {
 
-    public static final float BRIGHTNESS_FACTOR = 1.0f;
+    // well le temps est relatif
+    public static final int ONE_HOUR_PASSED = 15;
+    public static final float DAY = 0.95F;
+    public static final float NIGHT = 0.3F;
+    public static final float RATE_NIGHT_COMING = 0.01f;
+    public static final float RATE_DAY_COMING = 0.01f;
     public static final int TILE_SIZE = 16;
     public static final Level SPAWN = new MappedLevel("/res/levels/spawn.png");
 
@@ -24,8 +31,10 @@ public class Level {
     protected List<Partical> particals;
     protected List<Projectile> projectiles;
     protected List<Mob> mobs;
-
-
+    protected List<Effect> effects;
+    protected float brightnessFactor = 1.0f;
+    protected int timer;
+    protected boolean day = true;
 
             public Level(int width,int height){
                 this.width = width;
@@ -43,8 +52,9 @@ public class Level {
                 particals = new ArrayList<>();
                 projectiles = new ArrayList<>();
                 mobs = new ArrayList<>();
-
+                effects = new ArrayList<>();
             }
+
 
             protected void loadLevel(String path){}
             protected void generateLevel(){}
@@ -59,6 +69,9 @@ public class Level {
                 else if(e instanceof  Mob){
                     mobs.add((Mob) e);
                 }
+                else if(e instanceof  Effect){
+                    effects.add((Effect) e);
+                }
             }
 
             public void update(){
@@ -71,7 +84,31 @@ public class Level {
                 for(Mob m: mobs) {
                     m.update();
                 }
+                for(Effect e: effects) {
+                    e.update();
+                }
                 clean();
+                dayNightCycle();
+            }
+
+
+            private void dayNightCycle(){
+                if(timer < 7500) timer++; else timer = 0;
+
+                if(timer % ONE_HOUR_PASSED == 0){
+                    if(day){
+                        brightnessFactor-=RATE_NIGHT_COMING;
+                    }
+                    else{
+                        brightnessFactor+=RATE_DAY_COMING;
+                    }
+                }
+                if(brightnessFactor <= NIGHT){
+                    day = false;
+                }
+                if(brightnessFactor >= DAY){
+                    day = true;
+                }
             }
 
             private void clean(){
@@ -86,10 +123,15 @@ public class Level {
                         projectiles.remove(i);
                     }
                 }
-                for(int i=0;i<mobs.size();i++){
-                    if(mobs.get(i).isDead()){
+                for(int i=0;i<mobs.size();i++) {
+                    if (mobs.get(i).isDead()) {
                         mobs.remove(i);
                     }
+                }
+                    for(int i=0;i<effects.size();i++){
+                        if(effects.get(i).isDead()){
+                            effects.remove(i);
+                        }
                 }
             }
 
@@ -103,9 +145,16 @@ public class Level {
                 int y1 = yScroll + screen.getHeight() + TILE_SIZE >> 4;
                 for(int y=y0;y<y1;y++){
                     for(int x=x0;x<x1;x++){
-                        getTileByColor(x,y).render(x,y,screen);
+                        getBlockUsingColor(x,y).render(x,y,screen);
                     }
                 }
+                renderEntities(screen);
+                renderEffects(screen);
+                renderMessages(screen);
+
+            }
+
+            private void renderEntities(Screen screen){
                 for(Partical p: particals) {
                     p.render(screen);
                 }
@@ -118,19 +167,31 @@ public class Level {
                         DGFont.WorldMessage(screen , "oupsi !" , m.getX() >> 4, m.getY() >> 4);
                     }
                 }
+                for(Effect e: effects) {
+                        e.render(screen);
+                }
+            }
 
+            private void renderMessages(Screen screen){
                 DGFont.WorldMessage(screen , "ntdev-byte" , 6,5);
                 DGFont.WorldMessage(screen , "ntdev-byte" , 37,51);
+                if(brightnessFactor <= 0.5f){
+                    DGFont.showMessage(screen , "hold on it will be too long " , 2,2);
+                }
+            }
 
 
-                IMGFilter.brighten(screen.getPixels(), BRIGHTNESS_FACTOR);
+            private void renderEffects(Screen screen){
+                //dayNightEffect
+                IMGFilter.brighten(screen.getPixels(), brightnessFactor);
             }
 
             public boolean collision(int xa,int ya){
-               return getTileByColor(xa >> 4 , ya >> 4).isSolid();
+               return getBlockUsingColor(xa >> 4 , ya >> 4).isSolid();
             }
 
-            private Tile getTileByID(int x, int y)
+
+            private Tile getBlockUsingID(int x, int y)
             {
                 if(x < 0 || x >= width || y < 0 || y >= height) {return Tile.WALL;}
 
@@ -148,7 +209,7 @@ public class Level {
 
 
 
-    public Tile getTileByColor(int x, int y)
+    public Tile getBlockUsingColor(int x, int y)
             {
                 if(x < 0 || x >= width || y < 0 || y >= height) {return Tile.PARQUET1;}
 

@@ -4,8 +4,11 @@ import com.game.Game;
 import com.game.gfx.Screen;
 import com.game.gfx.Sprite;
 import com.game.input.InputHandler;
+import com.game.utils.IMGFilter;
+import com.game.utils.Vector2f;
 
 import java.awt.event.MouseEvent;
+import java.awt.image.ImageFilter;
 
 public class Player extends Mob{
 
@@ -112,6 +115,11 @@ public class Player extends Mob{
                 break;
         }
     }
+
+    public void render(Screen screen){
+        screen.renderMob(this, getX() - 16 , getY() - 16);
+    }
+
 
 
 }

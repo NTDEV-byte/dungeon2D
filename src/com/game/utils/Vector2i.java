@@ -24,6 +24,7 @@ public class Vector2i {
                  this.y = e.getY();
             }
 
+
             public Vector2i add(int amnt){
                 return new Vector2i(x + amnt, y + amnt);
             }
@@ -40,6 +41,15 @@ public class Vector2i {
             public Vector2i substract(Vector2i vector){
                 return new Vector2i(x - vector.x , y - vector.y);
             }
+
+
+            public int distance(Vector2i vector){
+                int dx = vector.x - this.x;
+                int dy = vector.y - this.y;
+                return (int)(Math.sqrt(dx * dx + dy * dy));
+            }
+
+
 
             public boolean colliding(Vector2i entity){
                   return this.x == entity.x && this.y == entity.y;
