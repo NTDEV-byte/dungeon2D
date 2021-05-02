@@ -151,13 +151,14 @@ public class MappedLevel extends Level{
     public static final int WALLO =  0xff1234f8;
     public static final int SEWER  =  0xff123404;;
 
+    private BufferedImage image;
 
     public MappedLevel(String path){
             super(path);
         }
 
         public void loadLevel(String path){
-            BufferedImage image = null;
+            image = null;
             try {
                 image = ImageIO.read(getClass().getResource(path));
 
@@ -169,4 +170,12 @@ public class MappedLevel extends Level{
             tiles = new int[width * height];
             image.getRGB(0,0,width,height,tiles,0,width);
         }
+
+    public BufferedImage getImage() {
+        return image;
+    }
+
+    public void setImage(BufferedImage image) {
+        this.image = image;
+    }
 }

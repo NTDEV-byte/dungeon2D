@@ -17,7 +17,7 @@ import java.util.List;
 public class Level {
 
     // well le temps est relatif
-    public static final int ONE_HOUR_PASSED = 15;
+    public static final int ONE_HOUR_PASSED = 90;
     public static final float DAY = 0.95F;
     public static final float NIGHT = 0.3F;
     public static final float RATE_NIGHT_COMING = 0.01f;

@@ -29,11 +29,17 @@ public class Projectile extends Entity {
                 this.angle = angle;
         }
 
+        public Projectile(float x,float y){
+            this.x = x;
+            this.y = y;
+            this.xOrigin = x;
+            this.yOrigin = y;
+        }
     @Override
     public void update() {
             if(level.collision((int)(x + xDir) , (int)(y+yDir))){
                 remove();
-                level.addEntity(new Effect("/res/effects/Explosion.png" ,(int) (x + xDir) , (int) (y + yDir) , 96 , 96 , 0xffaf6b26));
+                level.addEntity(new Effect( Effect.EXPLOSION ,(int) ((x - 20) + xDir - 20) , (int) ((y - 20) + yDir) , 96 , 96 , 0xffaf6b26));
                // Generator.generateParticals(20,(int)x,(int)y, Game.level,false);
             }
             else{

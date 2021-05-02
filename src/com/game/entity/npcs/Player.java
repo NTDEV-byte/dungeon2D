@@ -1,6 +1,7 @@
 package com.game.entity.npcs;
 
 import com.game.Game;
+import com.game.entity.projectiles.FuryDefense;
 import com.game.gfx.Screen;
 import com.game.gfx.Sprite;
 import com.game.input.InputHandler;
@@ -11,6 +12,8 @@ import java.awt.event.MouseEvent;
 import java.awt.image.ImageFilter;
 
 public class Player extends Mob{
+
+        public static final int FURYDEFENSE_TOTAL = 20;
 
     private InputHandler input;
 
@@ -57,13 +60,15 @@ public class Player extends Mob{
 
     }
 
-
     public void updateShoot(){
         if(input.mButton == MouseEvent.BUTTON1){
               double dx = input.x - Game.getWidthWindow() / 2;
               double dy = input.y - Game.getHeightWindow() / 2;
               double angle = Math.atan2(dy,dx);
               shoot(angle);
+        }
+        if(input.mButton == MouseEvent.BUTTON3) {
+               level.addEntity(new FuryDefense(getX(),getY(),FURYDEFENSE_TOTAL));
         }
     }
 

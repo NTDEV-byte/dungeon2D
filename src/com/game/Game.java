@@ -1,8 +1,6 @@
 package com.game;
 
-import java.awt.Canvas;
-import java.awt.Dimension;
-import java.awt.Graphics;
+import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
@@ -20,6 +18,7 @@ import com.game.gfx.SpriteSheet;
 import com.game.input.InputHandler;
 import com.game.levels.Camera;
 import com.game.levels.Level;
+import com.game.ui.inner.DGInnerLook;
 import com.game.utils.Generator;
 import com.game.utils.IMGFilter;
 
@@ -47,6 +46,7 @@ public class Game extends Canvas implements Runnable{
     // TODO: PlayerShoots XXX
     // TODO: Intelligent Mobs System A* XXX
     // TODO: Camera XXX
+    //TODO: Inventory
     /****************************************************/
     // TODO: Collisions
     /****************************************************/
@@ -67,20 +67,19 @@ public class Game extends Canvas implements Runnable{
     /**************************************************/
     //  TODO: DayNightCycle XXX
     // TODO: Level Interactions (collisions , interaction , messages) XXX
-    // TODO: Sound Effetcs
-    // TODO: Effect Exploisions portals ...
+    // TODO: Effect Exploisions portals ... XXX
     /*****************************************************
      //TODO: Entity Interactions
      //****************************************************/
-     //TODO: Shoot Different Projectiles
-     //TODO: Inventory
+     //TODO: Shoot Different Projectiles XXX
     /**************************************************/
      //TODO: UI
     /**************************************************/
-     //TODO: InnerUI
+     //TODO: InnerUI {DGInnerLook XXX,DGPanel XXX,  DGComponent XXX, DGMap XXX, DGHealthBar XXX, DGLabel, DGMenu , DGButton}
      //TODO: External UI
-    /**************************************************/
-
+     /**************************************************/
+     //TODO: Sound Effetcs
+     /**************************************************/
 
             public static final int WIDTH = 300;
             public static final int HEIGHT = 168;
@@ -88,6 +87,7 @@ public class Game extends Canvas implements Runnable{
             public static Level level = Level.SPAWN;;
             public static InputHandler input;
             public static Player player;
+            public static DGInnerLook look = DGInnerLook.look;
             private boolean running;
             private Thread thread;
             private JFrame window;
@@ -109,7 +109,7 @@ public class Game extends Canvas implements Runnable{
           player = new Player(0,0,input);
           player.setLevel(level);
           camera = new Camera(level,screen);
-          Generator.generateMobs(10,0,0,level);
+          Generator.generateMobs(1,0,0,level);
         }
 
         private void setView(){
@@ -145,7 +145,8 @@ public class Game extends Canvas implements Runnable{
                 input.update();
                 player.update();
                 level.update();
-                Effect.CIRCLE.update();
+                look.update();
+                Effect.EXPLOSION.update();
             }
 
             public void render(){
@@ -160,6 +161,7 @@ public class Game extends Canvas implements Runnable{
                 player.render(screen);
                 screen.flipBuffer(this);
                 g.drawImage(image,0,0,getWidth(),getHeight(),null);
+                look.render(g);
                 g.dispose();
                 bs.show();
             }
