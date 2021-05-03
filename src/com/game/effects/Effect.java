@@ -1,21 +1,19 @@
 package com.game.effects;
 
 import com.game.entity.Entity;
-import com.game.entity.VisibleObj;
 import com.game.gfx.*;
 
 public class Effect extends Entity {
 
-        public static Effect EXPLOSION = new Explosion("/res/effects/Explosion.png" , 0 , 0 , 96 , 96);
-
+        public static Effect EXPLOSION_EFFECT = new Explosion("/res/effects/Explosion.png" , 0 , 0 , 96 , 96);
+        public static Effect TELEPORTAION_EFFECT = new Teleportation("/res/effects/portal.png", 0 , 0 ,127,64);
 
         private SpriteSheet sheet;
         private Sprite sprites[];
         private EffectAnimator animator;
         private int maskColor = 0xffff00ff;
 
-
-                public Effect(String path ,int x,int y,int width,int height){
+                protected Effect(String path ,int x,int y,int width,int height){
                     this.x = x;
                     this.y = y;
                     sheet = new SpriteSheet(path);
@@ -23,16 +21,17 @@ public class Effect extends Entity {
                     animator = new EffectAnimator(sprites);
                 }
 
-                public Effect(String path ,  int x,int y,int width,int height,int maskColor){
-                    this.x = x;
-                    this.y = y;
-                    sheet = new SpriteSheet(path);
-                    sprites = Sprite.crop(sheet,width,height);
-                    animator = new EffectAnimator(sprites);
-                    this.maskColor = maskColor;
-                }
 
-                 public Effect(Effect effect , int x, int y, int width,int height){
+                 protected Effect(String path , int x,int y,int width,int height,int maskColor){
+                        this.x = x;
+                        this.y = y;
+                        sheet = new SpriteSheet(path);
+                        sprites = Sprite.crop(sheet,width,height);
+                        animator = new EffectAnimator(sprites);
+                        this.maskColor = maskColor;
+                    }
+
+                public Effect(Effect effect , int x, int y, int width,int height){
                     this.x = x;
                     this.y = y;
                     sheet = effect.sheet;

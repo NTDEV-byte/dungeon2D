@@ -57,6 +57,7 @@ public class Player extends Mob{
 
         updateShoot();
         updateSprite();
+        openPortal();
 
     }
 

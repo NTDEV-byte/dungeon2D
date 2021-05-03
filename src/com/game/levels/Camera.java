@@ -41,7 +41,9 @@ public class Camera {
                     }
             }
 
-            public void previous(){
+
+
+    public void previous(){
                 if(Game.input.p) {
                     if (inBound()) {
                         index--;
@@ -59,4 +61,13 @@ public class Camera {
             private boolean inBound(){
                 return index >= 0 && index <= level.getMobs().size();
             }
+
+
+    public Level getLevel() {
+        return level;
+    }
+
+    public void setLevel(Level level) {
+        this.level = level;
+    }
 }

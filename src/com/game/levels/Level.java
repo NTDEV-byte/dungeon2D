@@ -16,6 +16,9 @@ import java.util.List;
 
 public class Level {
 
+    public static final Level SPAWN = new MappedLevel("/res/levels/spawn.png");
+    public static final Level FIREWORLD = new MappedLevel("/res/levels/fireWorld.png");
+
     // well le temps est relatif
     public static final int ONE_HOUR_PASSED = 90;
     public static final float DAY = 0.95F;
@@ -23,7 +26,8 @@ public class Level {
     public static final float RATE_NIGHT_COMING = 0.01f;
     public static final float RATE_DAY_COMING = 0.01f;
     public static final int TILE_SIZE = 16;
-    public static final Level SPAWN = new MappedLevel("/res/levels/spawn.png");
+
+
 
     protected int width;
     protected int height;

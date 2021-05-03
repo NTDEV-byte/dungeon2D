@@ -1,5 +1,6 @@
 package com.game.levels.tiles;
 
+import com.game.Game;
 import com.game.gfx.Screen;
 import com.game.gfx.Sprite;
 import com.game.gfx.SpriteSheet;
@@ -156,11 +157,12 @@ public class Tile {
 
     public static final Tile PARQUET1   =  new Tile(Sprite.PARQUET1);
     public static final Tile WALLO =  new Wall(Sprite.WALLO);
-    public static final Tile SEWER  =  new Tile(Sprite.SEWER);
+    public static final Tile SEWER  =  new WormHole(Sprite.SEWER);
 
 
     	protected boolean solid;
         protected Sprite sprite;
+
 
                 public Tile(Sprite sprite){
                      this.sprite = sprite;

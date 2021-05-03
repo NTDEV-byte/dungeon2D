@@ -8,19 +8,15 @@ import java.awt.image.DataBufferInt;
 import javax.swing.JFrame;
 
 import com.game.effects.Effect;
+import com.game.effects.Teleportation;
 import com.game.entity.npcs.Girl;
 import com.game.entity.npcs.Player;
-import com.game.font.DGFont;
-import com.game.gfx.EffectAnimator;
 import com.game.gfx.Screen;
-import com.game.gfx.Sprite;
-import com.game.gfx.SpriteSheet;
 import com.game.input.InputHandler;
 import com.game.levels.Camera;
 import com.game.levels.Level;
 import com.game.ui.inner.DGInnerLook;
 import com.game.utils.Generator;
-import com.game.utils.IMGFilter;
 
 public class Game extends Canvas implements Runnable{
 
@@ -28,7 +24,9 @@ public class Game extends Canvas implements Runnable{
     // TODO: Graphics Screen XXX
     // TODO  SpriteSheet XXX
     // TODO  Sprite XXX
-    // TODO  SpriteAnimator
+    // TODO  SpriteAnimator XXX
+    // TODO  EffectAnimator XXX
+    // TODO  VisualAspect XXX
     /**************************************************/
     // TODO: Level System   XXX
     /**************************************************/
@@ -46,7 +44,7 @@ public class Game extends Canvas implements Runnable{
     // TODO: PlayerShoots XXX
     // TODO: Intelligent Mobs System A* XXX
     // TODO: Camera XXX
-    //TODO: Inventory
+     //TODO: Inventory
     /****************************************************/
     // TODO: Collisions
     /****************************************************/
@@ -65,9 +63,11 @@ public class Game extends Canvas implements Runnable{
     /**************************************************/
     // TODO: Level Interactions
     /**************************************************/
-    //  TODO: DayNightCycle XXX
+    // TODO: DayNightCycle XXX
     // TODO: Level Interactions (collisions , interaction , messages) XXX
     // TODO: Effect Exploisions portals ... XXX
+    // TODO: Teleporter XXX
+    // TODO: breakableWalls
     /*****************************************************
      //TODO: Entity Interactions
      //****************************************************/
@@ -79,7 +79,8 @@ public class Game extends Canvas implements Runnable{
      //TODO: External UI
      /**************************************************/
      //TODO: Sound Effetcs
-     /**************************************************/
+
+    /**************************************************/
 
             public static final int WIDTH = 300;
             public static final int HEIGHT = 168;
@@ -88,6 +89,7 @@ public class Game extends Canvas implements Runnable{
             public static InputHandler input;
             public static Player player;
             public static DGInnerLook look = DGInnerLook.look;
+            public static Game game;
             private boolean running;
             private Thread thread;
             private JFrame window;
@@ -146,7 +148,7 @@ public class Game extends Canvas implements Runnable{
                 player.update();
                 level.update();
                 look.update();
-                Effect.EXPLOSION.update();
+                Effect.EXPLOSION_EFFECT.update();
             }
 
             public void render(){
@@ -198,7 +200,33 @@ public class Game extends Canvas implements Runnable{
 
     public static void main(String args[]){
                 Game game = new Game();
+                Game.game = game;
                 game.start();
+    }
+
+
+    public Screen getScreen() {
+        return screen;
+    }
+
+    public void setScreen(Screen screen) {
+        this.screen = screen;
+    }
+
+    public Girl getGirl() {
+        return girl;
+    }
+
+    public void setGirl(Girl girl) {
+        this.girl = girl;
+    }
+
+    public Camera getCamera() {
+        return camera;
+    }
+
+    public void setCamera(Camera camera) {
+        this.camera = camera;
     }
 
     public static int getWidthWindow(){

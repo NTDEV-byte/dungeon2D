@@ -39,7 +39,7 @@ public class Projectile extends Entity {
     public void update() {
             if(level.collision((int)(x + xDir) , (int)(y+yDir))){
                 remove();
-                level.addEntity(new Effect( Effect.EXPLOSION ,(int) ((x - 20) + xDir - 20) , (int) ((y - 20) + yDir) , 96 , 96 , 0xffaf6b26));
+                level.addEntity(new Effect( Effect.EXPLOSION_EFFECT,(int) ((x - 20) + xDir - 20) , (int) ((y - 20) + yDir) , 96 , 96 , Explosion.EXPLOSION_MASK));
                // Generator.generateParticals(20,(int)x,(int)y, Game.level,false);
             }
             else{

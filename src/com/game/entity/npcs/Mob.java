@@ -3,10 +3,11 @@ package com.game.entity.npcs;
 import com.game.entity.Entity;
 import com.game.entity.projectiles.MasterProjectile;
 import com.game.entity.projectiles.Projectile;
-import com.game.font.DGFont;
 import com.game.gfx.Screen;
 import com.game.gfx.Sprite;
 import com.game.gfx.VisualAspect;
+import com.game.levels.interactions.Teleporation;
+import com.game.levels.tiles.WormHole;
 import com.game.utils.Generator;
 import com.game.utils.Node;
 import com.game.utils.PathFinder;
@@ -180,6 +181,13 @@ public abstract class Mob extends Entity {
             }
         }
 
+        protected void openPortal(){
+            Vector2i position = getWorldPosition();
+            if(level.getBlockUsingColor(position.x , position.y) instanceof WormHole) {
+                    new Teleporation().teleportate(this);
+                    System.out.println("Teleportation possible !");
+            }
+        }
 
     private void collisionMob(){
             List<Mob> mobs = level.getMobs();
