@@ -12,16 +12,17 @@ public class DGInnerLook {
             public static final int PANEL_HEIGHT = Game.getHeightWindow();
 
             public static DGInnerLook look = new DGInnerLook();
-            private static DGPanel panel;
+            private static List<DGPanel> panels = new ArrayList<DGPanel>();
+            public static DGPanel panel = new DGPanel(new Rectangle(Game.getWidthWindow()  - PANEL_WIDTH , 0 , PANEL_WIDTH , PANEL_HEIGHT) ,  Color.DARK_GRAY);
+            public static DGMap map = new DGMap();
 
             static{
-                panel = new DGPanel(new Rectangle(Game.getWidthWindow()  - PANEL_WIDTH , 0 , PANEL_WIDTH , PANEL_HEIGHT) ,  Color.DARK_GRAY);
-                panel.addComponent(new DGMap());
+                panel.addComponent(map);
                 look.addPanel(panel);
             }
 
 
-           private List<DGPanel> panels = new ArrayList<DGPanel>();
+
 
 
             private DGInnerLook(){

@@ -6,6 +6,7 @@ import com.game.entity.projectiles.Projectile;
 import com.game.gfx.Screen;
 import com.game.gfx.Sprite;
 import com.game.gfx.VisualAspect;
+import com.game.levels.Level;
 import com.game.levels.interactions.Teleporation;
 import com.game.levels.tiles.WormHole;
 import com.game.utils.Generator;
@@ -184,7 +185,7 @@ public abstract class Mob extends Entity {
         protected void openPortal(){
             Vector2i position = getWorldPosition();
             if(level.getBlockUsingColor(position.x , position.y) instanceof WormHole) {
-                    new Teleporation().teleportate(this);
+                    new Teleporation().teleportate(this , Teleporation.TO_FIREWORLD);
                     System.out.println("Teleportation possible !");
             }
         }

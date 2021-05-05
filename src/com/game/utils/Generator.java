@@ -1,14 +1,12 @@
 package com.game.utils;
 
-import com.game.entity.npcs.Girl;
-import com.game.entity.npcs.Hero;
-import com.game.entity.npcs.King;
+import com.game.entity.npcs.personnes.Girl;
+import com.game.entity.npcs.personnes.Hero;
+import com.game.entity.npcs.personnes.King;
 import com.game.entity.particals.Partical;
 import com.game.levels.Level;
 
 import java.util.Random;
-
-import static com.game.gfx.SpriteSheet.Hero;
 
 public class Generator {
 

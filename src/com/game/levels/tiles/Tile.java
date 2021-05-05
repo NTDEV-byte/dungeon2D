@@ -5,12 +5,13 @@ import com.game.gfx.Screen;
 import com.game.gfx.Sprite;
 import com.game.gfx.SpriteSheet;
 
+import static com.game.Game.level;
+
 public class Tile {
 
     public static final Tile HEAD_PILLAR = new Wall(Sprite.HEAD_PILLAR);
     public static final Tile BODY_PILLAR = new Wall(Sprite.BODY_PILLAR);
     public static final Tile FOOT_PILLAR = new Wall(Sprite.FOOT_PILLAR);
-
     public static final Tile  WALL = new Wall(Sprite.WALL);
 
     // TOP CARPET
@@ -111,7 +112,7 @@ public class Tile {
 
     public static final Tile DOWNSTAIR_UP =  new Tile(Sprite.DOWNSTAIR_UP);
     public static final Tile DOWNSTAIR_BOTTOM =  new Tile(Sprite.DOWNSTAIR_BOTTOM);
-    public static final Tile UPSTAIRUP=  new Tile(Sprite.UPSTAIRUP);
+    public static final Tile UPSTAIRUP=  new WormHole(Sprite.UPSTAIRUP);
 
     //UPSTAIR
 
@@ -155,7 +156,7 @@ public class Tile {
     public static final Tile WALLR  =  new Wall(Sprite.WALLR);
 
 
-    public static final Tile PARQUET1   =  new Tile(Sprite.PARQUET1);
+    public static final Tile PARQUET1   =  new Tile(Sprite.PARQUET1 , 0x886231);
     public static final Tile WALLO =  new Wall(Sprite.WALLO);
     public static final Tile SEWER  =  new WormHole(Sprite.SEWER);
 
@@ -163,13 +164,19 @@ public class Tile {
     	protected boolean solid;
         protected Sprite sprite;
 
+        protected int mask  = 0xffff00ff;
 
                 public Tile(Sprite sprite){
                      this.sprite = sprite;
                 }
 
+                public Tile(Sprite sprite , int mask){
+                    this.sprite = sprite;
+                    this.mask = mask;
+                }
+
                 public void render(int xa,int ya,Screen screen){
-                    screen.renderTile(xa << 4,ya << 4,this);
+                    screen.renderTile(xa << 4,ya << 4,this,level.getBackGround().getMask());
                 }
 
 
@@ -181,4 +188,11 @@ public class Tile {
              return false;
          }
 
+    public int getMask() {
+        return mask;
+    }
+
+    public void setMask(int mask) {
+        this.mask = mask;
+    }
 }

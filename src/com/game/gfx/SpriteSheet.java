@@ -14,10 +14,15 @@ public class SpriteSheet {
         public static final SpriteSheet Base =  new SpriteSheet("/res/spritesheets/base.png");
 
         //Mobs
-        public static final SpriteSheet Player = new SpriteSheet("/res/spritesheets/mobs/master.png");
-        public static final SpriteSheet Girl = new SpriteSheet("/res/spritesheets/mobs/girl.png");
-        public static final SpriteSheet Hero = new SpriteSheet("/res/spritesheets/mobs/hero.png");
-        public static final SpriteSheet King = new SpriteSheet("/res/spritesheets/mobs/king.png");
+        public static final SpriteSheet Player = new SpriteSheet("/res/spritesheets/mobs/personnes/master.png");
+        public static final SpriteSheet Girl = new SpriteSheet("/res/spritesheets/mobs/personnes/girl.png");
+        public static final SpriteSheet Hero = new SpriteSheet("/res/spritesheets/mobs/personnes/hero.png");
+        public static final SpriteSheet King = new SpriteSheet("/res/spritesheets/mobs/personnes/king.png");
+
+        // Monsters
+
+        public static final SpriteSheet GHOST = new SpriteSheet("/res/spritesheets/mobs/monsters/ghost.png");
+        public static final SpriteSheet LUCIFER = new SpriteSheet("/res/spritesheets/mobs/monsters/lucifer.png");
 
         //Projectiles
         public static final SpriteSheet Projectiles = new SpriteSheet("/res/spritesheets/projectiles.png");

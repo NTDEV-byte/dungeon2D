@@ -8,9 +8,10 @@ import java.awt.image.DataBufferInt;
 import javax.swing.JFrame;
 
 import com.game.effects.Effect;
-import com.game.effects.Teleportation;
-import com.game.entity.npcs.Girl;
-import com.game.entity.npcs.Player;
+import com.game.entity.npcs.monsters.Ghost;
+import com.game.entity.npcs.monsters.Lucifer;
+import com.game.entity.npcs.personnes.Girl;
+import com.game.entity.npcs.personnes.Player;
 import com.game.gfx.Screen;
 import com.game.input.InputHandler;
 import com.game.levels.Camera;
@@ -79,7 +80,6 @@ public class Game extends Canvas implements Runnable{
      //TODO: External UI
      /**************************************************/
      //TODO: Sound Effetcs
-
     /**************************************************/
 
             public static final int WIDTH = 300;
@@ -95,9 +95,10 @@ public class Game extends Canvas implements Runnable{
             private JFrame window;
             private BufferedImage image = new BufferedImage(WIDTH,HEIGHT,BufferedImage.TYPE_INT_RGB);
             private Screen screen;
+            private Lucifer lucifer;
+
 
             private int pixels[] = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
-            private Girl girl;
             private Camera camera;
 
            public Game(){
@@ -111,6 +112,7 @@ public class Game extends Canvas implements Runnable{
           player = new Player(0,0,input);
           player.setLevel(level);
           camera = new Camera(level,screen);
+          lucifer = new Lucifer(0,0);
           Generator.generateMobs(1,0,0,level);
         }
 
@@ -148,6 +150,7 @@ public class Game extends Canvas implements Runnable{
                 player.update();
                 level.update();
                 look.update();
+                lucifer.update();
                 Effect.EXPLOSION_EFFECT.update();
             }
 
@@ -161,6 +164,9 @@ public class Game extends Canvas implements Runnable{
                 Graphics g = bs.getDrawGraphics();
                 camera.followPlayer();
                 player.render(screen);
+                lucifer.render(screen);
+
+
                 screen.flipBuffer(this);
                 g.drawImage(image,0,0,getWidth(),getHeight(),null);
                 look.render(g);
@@ -204,21 +210,12 @@ public class Game extends Canvas implements Runnable{
                 game.start();
     }
 
-
     public Screen getScreen() {
         return screen;
     }
 
     public void setScreen(Screen screen) {
         this.screen = screen;
-    }
-
-    public Girl getGirl() {
-        return girl;
-    }
-
-    public void setGirl(Girl girl) {
-        this.girl = girl;
     }
 
     public Camera getCamera() {

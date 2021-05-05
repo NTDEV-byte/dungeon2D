@@ -1,6 +1,7 @@
-package com.game.entity.npcs;
+package com.game.entity.npcs.personnes;
 
 import com.game.Game;
+import com.game.entity.npcs.Mob;
 import com.game.entity.projectiles.FuryDefense;
 import com.game.gfx.Screen;
 import com.game.gfx.Sprite;
@@ -11,7 +12,7 @@ import com.game.utils.Vector2f;
 import java.awt.event.MouseEvent;
 import java.awt.image.ImageFilter;
 
-public class Player extends Mob{
+public class Player extends Mob {
 
         public static final int FURYDEFENSE_TOTAL = 20;
 

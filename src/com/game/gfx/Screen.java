@@ -46,7 +46,7 @@ public class Screen {
         }
     }
 
-    public void renderTile(int xa, int ya, Tile tile) {
+    public void renderTile(int xa, int ya, Tile tile,int mask) {
         xa-=xOffset;
         ya-=yOffset;
         for (int y = 0; y < tile.getSprite().getHeight(); y++) {
@@ -56,7 +56,8 @@ public class Screen {
                 if(xp < -Level.TILE_SIZE || xp >= width || yp < 0 || yp >= height) break;
                 if(xp < 0) xp = 0;
                 int col = tile.getSprite().getPixels()[x + y * tile.getSprite().getWidth()];
-                if(col != MASK_ALPHA) pixels[xp + yp * width] = col;
+                if(col == MASK_ALPHA) col = mask;
+                pixels[xp + yp * width] = col;
             }
         }
     }
@@ -183,7 +184,7 @@ public class Screen {
         int screenPixels[] = game.getPixels();
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                screenPixels[x + y * width] = pixels[x + y * width];
+                screenPixels[x + y * width] =  pixels[x + y * width] ;
             }
         }
     }

@@ -2,7 +2,7 @@ package com.game.levels;
 
 import com.game.Game;
 import com.game.entity.npcs.Mob;
-import com.game.entity.npcs.Player;
+import com.game.entity.npcs.personnes.Player;
 import com.game.gfx.Screen;
 
 import java.util.List;

@@ -12,12 +12,23 @@ public class VisualAspect {
         private Sprite sprite;
 
                     public VisualAspect(SpriteSheet spriteSheetBase){
-                      up = new SpriteSheet(0,0,3,1,32,32,spriteSheetBase);
-                      right = new SpriteSheet(0,1,3,1,32,32,spriteSheetBase);
-                      down = new SpriteSheet(0,2,3,1,32,32,spriteSheetBase);
-                      left = new SpriteSheet(0,3,3,1,32,32,spriteSheetBase);
+                      up = new SpriteSheet(0,0,4,1,32,32,spriteSheetBase);
+                      right = new SpriteSheet(0,1,4,1,32,32,spriteSheetBase);
+                      down = new SpriteSheet(0,2,4,1,32,32,spriteSheetBase);
+                      left = new SpriteSheet(0,3,4,1,32,32,spriteSheetBase);
                       animator = new SpriteAnimator(down);
                       sprite = animator.getSprite();
+
+                    }
+
+
+                    public VisualAspect(SpriteSheetModular modular){
+                        up =  modular.getUp();
+                        right = modular.getRight();
+                        down = modular.getDown();
+                        left = modular.getLeft();
+                        animator = new SpriteAnimator(down);
+                        sprite = animator.getSprite();
 
                     }
 

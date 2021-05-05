@@ -1,7 +1,7 @@
 package com.game.entity;
 
 import com.game.Game;
-import com.game.entity.npcs.Player;
+import com.game.entity.npcs.personnes.Player;
 import com.game.gfx.Screen;
 import com.game.levels.Level;
 import com.game.utils.Vector2i;
@@ -15,7 +15,7 @@ public abstract class Entity implements VisibleObj {
     protected boolean dead;
     protected Level level = Game.level;
     protected Player player = Game.player;
-    protected Random random;
+    protected Random random = new Random();
     protected int timer;
 
 

@@ -18,6 +18,7 @@ public class Level {
 
     public static final Level SPAWN = new MappedLevel("/res/levels/spawn.png");
     public static final Level FIREWORLD = new MappedLevel("/res/levels/fireWorld.png");
+   // public static final Level UNDERWORLD = new MappedLevel("/res/levels/underWorld.png");
 
     // well le temps est relatif
     public static final int ONE_HOUR_PASSED = 90;
@@ -39,13 +40,8 @@ public class Level {
     protected float brightnessFactor = 1.0f;
     protected int timer;
     protected boolean day = true;
+    protected Tile backGround = Tile.PARQUET1;
 
-            public Level(int width,int height){
-                this.width = width;
-                this.height = height;
-                this.tiles = new int[width * height];
-                generateLevel();
-            }
 
             public Level(String path){
                 loadLevel(path);
@@ -59,9 +55,7 @@ public class Level {
                 effects = new ArrayList<>();
             }
 
-
             protected void loadLevel(String path){}
-            protected void generateLevel(){}
 
             public void addEntity(Entity e){
                 if(e instanceof Partical){
@@ -179,9 +173,6 @@ public class Level {
             private void renderMessages(Screen screen){
                 DGFont.WorldMessage(screen , "ntdev-byte" , 6,5);
                 DGFont.WorldMessage(screen , "ntdev-byte" , 37,51);
-                if(brightnessFactor <= 0.5f){
-                    DGFont.showMessage(screen , "hold on it will be too long " , 2,2);
-                }
             }
 
 
@@ -195,27 +186,11 @@ public class Level {
             }
 
 
-            private Tile getBlockUsingID(int x, int y)
-            {
-                if(x < 0 || x >= width || y < 0 || y >= height) {return Tile.WALL;}
-
-                else if(tiles[x + y * width] == DiceLevel.HEAD_PILLAR) {return Tile.HEAD_PILLAR;}
-                else if(tiles[x + y * width] == DiceLevel.BODY_PILLAR) {return Tile.BODY_PILLAR;}
-                else if(tiles[x + y * width] == DiceLevel.FOOT_PILLAR) {return Tile.FOOT_PILLAR;}
-                else if(tiles[x + y * width] == DiceLevel.CARPET) {return Tile.CARPET;}
-                else if(tiles[x + y * width] == DiceLevel.CARPETB) {return Tile.CARPETB;}
-                else if(tiles[x + y * width] == DiceLevel.CARPETBL) {return Tile.CARPETBL;}
-                else if(tiles[x + y * width] == DiceLevel.WALL) {return Tile.WALL;}
-                else if(tiles[x + y * width] == DiceLevel.BORDERLEFT) {return Tile.BORDERLEFT;}
-
-                return Tile.CARPETTL;
-            }
-
 
 
     public Tile getBlockUsingColor(int x, int y)
             {
-                if(x < 0 || x >= width || y < 0 || y >= height) {return Tile.PARQUET1;}
+                if(x < 0 || x >= width || y < 0 || y >= height) {return backGround;}
 
                 else if(tiles[x + y * width] == MappedLevel.HEAD_PILLAR) {return Tile.HEAD_PILLAR;}
                 else if(tiles[x + y * width] == MappedLevel.BODY_PILLAR) {return Tile.BODY_PILLAR;}
@@ -350,7 +325,7 @@ public class Level {
                 else if(tiles[x + y * width] == MappedLevel.WALLO) {return Tile.WALLO;}
                 else if(tiles[x + y * width] == MappedLevel.SEWER) {return Tile.SEWER;}
 
-                return Tile.PARQUET1;
+                return backGround;
             }
 
     public List<Partical> getParticals() {
@@ -370,6 +345,13 @@ public class Level {
     }
     public void setMobs(List<Mob> mobs) {
         this.mobs = mobs;
+    }
+    public Tile getBackGround() {
+        return backGround;
+    }
+
+    public void setBackGround(Tile backGround) {
+        this.backGround = backGround;
     }
 
 

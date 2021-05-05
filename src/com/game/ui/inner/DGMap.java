@@ -13,6 +13,9 @@ import java.util.Vector;
 
 public class DGMap extends DGComponent{
 
+
+    public static final int COLOR_PLAYER_LOCATION = 0xff0000;
+    public static final int COLOR_NPCS_LOCATIONS = 0x00ff00;
     private BufferedImage image;
     private int originalPixels[];
     private int width,height;
@@ -40,13 +43,14 @@ public class DGMap extends DGComponent{
         }
     }
 
+    // clean path
     private void cleanIMG(){
 
     }
 
     private void trackPlayerPosition(){
         Vector2i player = Game.player.getWorldPosition();
-        if(inBounds(player)) image.setRGB(player.x , player.y , 0xff0000);
+        if(inBounds(player)) image.setRGB(player.x , player.y , COLOR_PLAYER_LOCATION);
     }
 
     private void trackMobsPosition(){
@@ -54,7 +58,7 @@ public class DGMap extends DGComponent{
         if(mobs != null){
             for(int i=0;i<mobs.size();i++){
                 Vector2i position = mobs.get(i).getWorldPosition();
-                if(inBounds(position)) image.setRGB(position.x , position.y , 0x00ff00);
+                if(inBounds(position)) image.setRGB(position.x , position.y , COLOR_NPCS_LOCATIONS);
             }
         }
 
@@ -81,7 +85,10 @@ public class DGMap extends DGComponent{
         else{
             System.err.println("Error while getting level image !");
         }
+    }
 
+    public void setIMG(BufferedImage image){
+         this.image = image;
     }
 
 }
