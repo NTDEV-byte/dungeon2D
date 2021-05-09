@@ -21,9 +21,9 @@ public class Level {
    // public static final Level UNDERWORLD = new MappedLevel("/res/levels/underWorld.png");
 
     // well le temps est relatif
-    public static final int ONE_HOUR_PASSED = 90;
-    public static final float DAY = 0.95F;
-    public static final float NIGHT = 0.3F;
+    public static final int ONE_HOUR_PASSED = 20;
+    public static final float DAY = 0.99F;
+    public static final float NIGHT = 0.1F;
     public static final float RATE_NIGHT_COMING = 0.01f;
     public static final float RATE_DAY_COMING = 0.01f;
     public static final int TILE_SIZE = 16;
@@ -38,21 +38,22 @@ public class Level {
     protected List<Mob> mobs;
     protected List<Effect> effects;
     protected float brightnessFactor = 1.0f;
+    protected float lightIntensity = 0;
     protected int timer;
     protected boolean day = true;
     protected Tile backGround = Tile.PARQUET1;
-
+    protected  LightZone lighter;
 
             public Level(String path){
                 loadLevel(path);
-                initialize();
             }
 
-            private void initialize(){
+            public void initialize(){
                 particals = new ArrayList<>();
                 projectiles = new ArrayList<>();
                 mobs = new ArrayList<>();
                 effects = new ArrayList<>();
+                lighter = new LightZone(11,11);
             }
 
             protected void loadLevel(String path){}
@@ -106,7 +107,18 @@ public class Level {
                 }
                 if(brightnessFactor >= DAY){
                     day = true;
+                    lightIntensity = 0;
                 }
+
+                if(brightnessFactor <= 0.2f);
+                    if(lightIntensity < 5.0f) {
+                     lightIntensity+=0.5f;
+                }
+                    if(brightnessFactor >= 0.2f){
+                        if(lightIntensity <= 5.0f){
+                            lightIntensity-=0.5f;
+                        }
+                    }
             }
 
             private void clean(){
@@ -141,15 +153,17 @@ public class Level {
                 int x1 = xScroll + screen.getWidth() + TILE_SIZE >> 4;
                 int y0 = yScroll >> 4;
                 int y1 = yScroll + screen.getHeight() + TILE_SIZE >> 4;
+
                 for(int y=y0;y<y1;y++){
                     for(int x=x0;x<x1;x++){
                         getBlockUsingColor(x,y).render(x,y,screen);
                     }
                 }
-                renderEntities(screen);
+
+
                 renderEffects(screen);
                 renderMessages(screen);
-
+                renderEntities(screen);
             }
 
             private void renderEntities(Screen screen){
@@ -179,6 +193,8 @@ public class Level {
             private void renderEffects(Screen screen){
                 //dayNightEffect
                 IMGFilter.brighten(screen.getPixels(), brightnessFactor);
+                lighter.increaseLight(screen);
+
             }
 
             public boolean collision(int xa,int ya){
@@ -354,5 +370,36 @@ public class Level {
         this.backGround = backGround;
     }
 
+    public List<Effect> getEffects() {
+        return effects;
+    }
 
+    public void setEffects(List<Effect> effects) {
+        this.effects = effects;
+    }
+
+    public float getBrightnessFactor() {
+        return brightnessFactor;
+    }
+
+    public void setBrightnessFactor(float brightnessFactor) {
+        this.brightnessFactor = brightnessFactor;
+    }
+
+    public boolean isDay() {
+        return day;
+    }
+
+    public void setDay(boolean day) {
+        this.day = day;
+    }
+
+
+    public float getLightIntensity() {
+        return lightIntensity;
+    }
+
+    public void setLightIntensity(float lightIntensity) {
+        this.lightIntensity = lightIntensity;
+    }
 }

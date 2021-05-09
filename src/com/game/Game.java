@@ -21,73 +21,16 @@ import com.game.utils.Generator;
 
 public class Game extends Canvas implements Runnable{
 
-    // TODO: EngineBase Game , GameLoop  XXX
-    // TODO: Graphics Screen XXX
-    // TODO  SpriteSheet XXX
-    // TODO  Sprite XXX
-    // TODO  SpriteAnimator XXX
-    // TODO  EffectAnimator XXX
-    // TODO  VisualAspect XXX
-    /**************************************************/
-    // TODO: Level System   XXX
-    /**************************************************/
-    // TODO: Level Class XXX
-    // TODO: RandomLevel , MappedLevel XXX
-    // TODO: Tiles System and logic XXX
-    // TODO: Design Levels XXX
-    /**************************************************/
-    // TODO:  Entity System
-    /**************************************************/
-    // TODO: Entity System XXX
-    // TODO  MOBS  + Player XXX
-    // TODO: Particals XXX
-    // TODO: Projectiles XXX
-    // TODO: PlayerShoots XXX
-    // TODO: Intelligent Mobs System A* XXX
-    // TODO: Camera XXX
-     //TODO: Inventory
-    /****************************************************/
-    // TODO: Collisions
-    /****************************************************/
-    // TODO: Mob VS World XXX
-    // TODO: Projectile VS  World XXX
-    // TODO: Mob VS Projectile XXX
-    // TODO: Mob VS Mob XXX
-    /**************************************************/
-    // TODO: Font
-    /**************************************************/
-    // TODO: Font XXX
-    /**************************************************/
-    // TODO: Utils
-    /**************************************************/
-    // TODO: ImageFilter XXX
-    /**************************************************/
-    // TODO: Level Interactions
-    /**************************************************/
-    // TODO: DayNightCycle XXX
-    // TODO: Level Interactions (collisions , interaction , messages) XXX
-    // TODO: Effect Exploisions portals ... XXX
-    // TODO: Teleporter XXX
-    // TODO: breakableWalls
-    /*****************************************************
-     //TODO: Entity Interactions
-     //****************************************************/
-     //TODO: Shoot Different Projectiles XXX
-    /**************************************************/
-     //TODO: UI
-    /**************************************************/
-     //TODO: InnerUI {DGInnerLook XXX,DGPanel XXX,  DGComponent XXX, DGMap XXX, DGHealthBar XXX, DGLabel, DGMenu , DGButton}
-     //TODO: External UI
-     /**************************************************/
-     //TODO: Sound Effetcs
-    /**************************************************/
 
             public static final int WIDTH = 300;
             public static final int HEIGHT = 168;
             public static final int SCALE = 3;
-            public static Level level = Level.SPAWN;;
-            public static InputHandler input;
-            public static Player player;
+            public static Level level = Level.SPAWN;
+             static {
+                 level.initialize();
+             }
+            public static InputHandler input = new InputHandler();
+            public static Player player = new Player(0,0,input);
             public static DGInnerLook look = DGInnerLook.look;
             public static Game game;
             private boolean running;
@@ -96,7 +39,7 @@ public class Game extends Canvas implements Runnable{
             private BufferedImage image = new BufferedImage(WIDTH,HEIGHT,BufferedImage.TYPE_INT_RGB);
             private Screen screen;
             private Lucifer lucifer;
-
+            private Ghost ghost;
 
             private int pixels[] = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
             private Camera camera;
@@ -108,12 +51,10 @@ public class Game extends Canvas implements Runnable{
 
         private void initialize(){
           screen = new Screen(WIDTH,HEIGHT);
-          input = new InputHandler();
-          player = new Player(0,0,input);
-          player.setLevel(level);
           camera = new Camera(level,screen);
           lucifer = new Lucifer(0,0);
-          Generator.generateMobs(1,0,0,level);
+          ghost = new Ghost(0,0);
+          Generator.generateMobs(1,16,13,level);
         }
 
         private void setView(){
@@ -149,8 +90,9 @@ public class Game extends Canvas implements Runnable{
                 input.update();
                 player.update();
                 level.update();
-                look.update();
                 lucifer.update();
+                ghost.update();
+                look.update();
                 Effect.EXPLOSION_EFFECT.update();
             }
 
@@ -165,7 +107,7 @@ public class Game extends Canvas implements Runnable{
                 camera.followPlayer();
                 player.render(screen);
                 lucifer.render(screen);
-
+                ghost.render(screen);
 
                 screen.flipBuffer(this);
                 g.drawImage(image,0,0,getWidth(),getHeight(),null);

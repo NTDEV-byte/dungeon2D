@@ -7,6 +7,7 @@ import com.game.entity.particals.Partical;
 import com.game.entity.projectiles.Projectile;
 import com.game.levels.Level;
 import com.game.levels.tiles.Tile;
+import com.game.utils.IMGFilter;
 
 import java.util.Random;
 
@@ -57,6 +58,25 @@ public class Screen {
                 if(xp < 0) xp = 0;
                 int col = tile.getSprite().getPixels()[x + y * tile.getSprite().getWidth()];
                 if(col == MASK_ALPHA) col = mask;
+                pixels[xp + yp * width] = col;
+            }
+        }
+    }
+
+    public void renderLightSourceTile(int xa, int ya,Tile tile,int mask ,int r,int g,int b,double intensity) {
+        xa-=xOffset;
+        ya-=yOffset;
+        for (int y = 0; y < tile.getSprite().getHeight(); y++) {
+            int yp = y + ya;
+            for (int x = 0; x < tile.getSprite().getWidth(); x++) {
+                int xp = x + xa;
+                if(xp < -Level.TILE_SIZE || xp >= width || yp < 0 || yp >= height) break;
+                if(xp < 0) xp = 0;
+                int col = tile.getSprite().getPixels()[x + y * tile.getSprite().getWidth()];
+                int ri = (int)(r * intensity);
+                int gi = (int)(g * intensity);
+                int bi = (int)(b * intensity);
+                col = IMGFilter.calculateColor(col , ri, gi,bi);
                 pixels[xp + yp * width] = col;
             }
         }
